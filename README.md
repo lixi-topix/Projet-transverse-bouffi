@@ -4,12 +4,12 @@ I/ Partie utilisateur
 
 1. Faire un base de données avec plats/entrées/desserts
 2. Composer un menu à partir des différents éléments du "1."
-3.1 Choisir un menu préféré
-3.2 Noter les plats
-4.1 Création de la liste de courses
-4.2 Gestion temps réel de la liste de courses
-5. Gestion du frigo
-6. Gestion de filtres (ex : alergies)
+3. Choisir un menu préféré
+4. Noter les plats
+5. Création de la liste de courses
+6. Gestion temps réel de la liste de courses
+7. Gestion du frigo
+8. Gestion de filtres (ex : alergies)
 
 II/ Partie nutritioniste 
 
