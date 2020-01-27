@@ -8,7 +8,7 @@ I/ Partie utilisateur
 4. Noter les plats
 5. Création de la liste de courses
 6. Gestion temps réel de la liste de courses
-7. Gestion du frigo
+7. Gestion du frigo : base de données personelle contenant les aliments que possède l'utilisateur.
 8. Gestion de filtres (ex : alergies)
 
 II/ Partie nutritioniste 
