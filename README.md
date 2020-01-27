@@ -17,3 +17,7 @@ II/ Partie nutritioniste
 2. Grouper des clients
 3. Envoyer une semaine de menu à préparer 
 4. Comparation des plats / proposer plats alternatifs
+
+
+
+Mail de Melekhova : melekhova@gmail.com
