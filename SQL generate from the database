@@ -1,0 +1,146 @@
+CREATE TABLE Menu
+(
+  ID_Menu INT NOT NULL,
+  Menu_Name INT NOT NULL,
+  PRIMARY KEY (ID_Menu)
+);
+
+CREATE TABLE Ingredient
+(
+  ID_ingredient INT NOT NULL,
+  Ingredient_Name VARCHAR NOT NULL,
+  PRIMARY KEY (ID_ingredient)
+);
+
+CREATE TABLE category
+(
+  ID_Category INT NOT NULL,
+  Category_Name VARCHAR NOT NULL,
+  PRIMARY KEY (ID_Category)
+);
+
+CREATE TABLE Filtre
+(
+  ID_Filtre INT NOT NULL,
+  Filtre_Name VARCHAR NOT NULL,
+  PRIMARY KEY (ID_Filtre)
+);
+
+CREATE TABLE User
+(
+  ID_User INT NOT NULL,
+  User_Name VARCHAR NOT NULL,
+  User_password VARCHAR NOT NULL,
+  PRIMARY KEY (ID_User)
+);
+
+CREATE TABLE Commentary_Menu
+(
+  ID_comentary_Menu INT NOT NULL,
+  Comment_Menu INT NOT NULL,
+  Note_Menu INT NOT NULL,
+  Date_Commentary_Menu INT NOT NULL,
+  ID_User INT NOT NULL,
+  PRIMARY KEY (ID_comentary_Menu),
+  FOREIGN KEY (ID_User) REFERENCES User(ID_User)
+);
+
+CREATE TABLE Filtre_utilisateur(alergènes)
+(
+  ID_User INT NOT NULL,
+  ID_Filtre INT NOT NULL,
+  PRIMARY KEY (ID_User, ID_Filtre),
+  FOREIGN KEY (ID_User) REFERENCES User(ID_User),
+  FOREIGN KEY (ID_Filtre) REFERENCES Filtre(ID_Filtre)
+);
+
+CREATE TABLE Recette
+(
+  ID_Recette INT NOT NULL,
+  Recette_Name VARCHAR NOT NULL,
+  Recette_Instructions VARCHAR NOT NULL,
+  Recette_Date DATE NOT NULL,
+  Recette_Cost INT NOT NULL,
+  Recette_Time INT NOT NULL,
+  Recette_Calories INT NOT NULL,
+  Image_Recette INT NOT NULL,
+  ID_Category INT NOT NULL,
+  ID_User INT NOT NULL,
+  PRIMARY KEY (ID_Recette),
+  FOREIGN KEY (ID_Category) REFERENCES category(ID_Category),
+  FOREIGN KEY (ID_User) REFERENCES User(ID_User)
+);
+
+CREATE TABLE Menu_Recette
+(
+  ID_Menu INT NOT NULL,
+  ID_Recette INT NOT NULL,
+  PRIMARY KEY (ID_Menu, ID_Recette),
+  FOREIGN KEY (ID_Menu) REFERENCES Menu(ID_Menu),
+  FOREIGN KEY (ID_Recette) REFERENCES Recette(ID_Recette)
+);
+
+CREATE TABLE Recette_Ingredient
+(
+  RI_Quantity VARCHAR NOT NULL,
+  ID_Recette INT NOT NULL,
+  ID_ingredient INT NOT NULL,
+  PRIMARY KEY (ID_Recette, ID_ingredient),
+  FOREIGN KEY (ID_Recette) REFERENCES Recette(ID_Recette),
+  FOREIGN KEY (ID_ingredient) REFERENCES Ingredient(ID_ingredient)
+);
+
+CREATE TABLE Filtre_Recette
+(
+  ID_Recette INT NOT NULL,
+  ID_Filtre INT NOT NULL,
+  PRIMARY KEY (ID_Recette, ID_Filtre),
+  FOREIGN KEY (ID_Recette) REFERENCES Recette(ID_Recette),
+  FOREIGN KEY (ID_Filtre) REFERENCES Filtre(ID_Filtre)
+);
+
+CREATE TABLE Commentary_R
+(
+  ID_Commentary_Recette INT NOT NULL,
+  Comment_Recette VARCHAR NOT NULL,
+  Note_Recette FLOAT NOT NULL,
+  Date_Commentary_Recette DATE NOT NULL,
+  ID_User INT NOT NULL,
+  PRIMARY KEY (ID_Commentary_Recette),
+  FOREIGN KEY (ID_User) REFERENCES User(ID_User)
+);
+
+CREATE TABLE Frigo
+(
+  ID_Frigo INT NOT NULL,
+  ID_User INT NOT NULL,
+  PRIMARY KEY (ID_Frigo),
+  FOREIGN KEY (ID_User) REFERENCES User(ID_User)
+);
+
+CREATE TABLE Commentary_Menu
+(
+  ID_Menu INT NOT NULL,
+  ID_comentary_Menu INT NOT NULL,
+  PRIMARY KEY (ID_Menu, ID_comentary_Menu),
+  FOREIGN KEY (ID_Menu) REFERENCES Menu(ID_Menu),
+  FOREIGN KEY (ID_comentary_Menu) REFERENCES Commentary_Menu(ID_comentary_Menu)
+);
+
+CREATE TABLE Recette_commentary
+(
+  ID_Recette INT NOT NULL,
+  ID_Commentary_Recette INT NOT NULL,
+  PRIMARY KEY (ID_Recette, ID_Commentary_Recette),
+  FOREIGN KEY (ID_Recette) REFERENCES Recette(ID_Recette),
+  FOREIGN KEY (ID_Commentary_Recette) REFERENCES Commentary_R(ID_Commentary_Recette)
+);
+
+CREATE TABLE Table
+(
+  ID_ingredient INT NOT NULL,
+  ID_Frigo INT NOT NULL,
+  PRIMARY KEY (ID_ingredient, ID_Frigo),
+  FOREIGN KEY (ID_ingredient) REFERENCES Ingredient(ID_ingredient),
+  FOREIGN KEY (ID_Frigo) REFERENCES Frigo(ID_Frigo)
+);
