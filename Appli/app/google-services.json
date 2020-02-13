@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "914008605775",
+    "firebase_url": "https://bon-appet-eat.firebaseio.com",
+    "project_id": "bon-appet-eat",
+    "storage_bucket": "bon-appet-eat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914008605775:android:0580470c1a0eb1769cd63a",
+        "android_client_info": {
+          "package_name": "com.example.Bon_Appit_eat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914008605775-91okrbdjm43b87qjaci8js6nls60ainj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKdM92KyfEyA4KnWb8frJ6W7xN_YDuNog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914008605775-91okrbdjm43b87qjaci8js6nls60ainj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

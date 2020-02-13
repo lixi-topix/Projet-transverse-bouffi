@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Bon_Appit_eat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class RecetteFragment extends Fragment {
+public class FrigoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recette, container, false);
+        return inflater.inflate(R.layout.fragment_frigo, container, false);
     }
 }

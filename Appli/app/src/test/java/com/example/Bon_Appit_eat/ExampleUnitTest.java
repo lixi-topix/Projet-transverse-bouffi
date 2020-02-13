@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Bon_Appit_eat;
 
 import org.junit.Test;
 
