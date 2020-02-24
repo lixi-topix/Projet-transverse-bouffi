@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         settingsFragment = new SettingsFragment();
         setContentView(R.layout.activity_main);
 
-        ImageButton addButton = findViewById(R.id.addButton);
+        addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 InitializeFragments(frigoFragment);
