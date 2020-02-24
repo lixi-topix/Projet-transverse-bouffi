@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
@@ -26,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
         recetteFragment = new RecetteFragment();
         settingsFragment = new SettingsFragment();
         setContentView(R.layout.activity_main);
+
+        ImageButton addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                InitializeFragments(frigoFragment);
+            }
+        });
     }
 
     @Override
@@ -64,5 +75,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit(); // save changes
     }
+
 
 }
