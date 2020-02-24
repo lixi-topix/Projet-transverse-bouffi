@@ -21,3 +21,8 @@ II/ Partie nutritioniste
 
 
 Mail de Melekhova : melekhova@gmail.com
+
+todo :
+Partie technique
+Taches
+Gantt chart.
