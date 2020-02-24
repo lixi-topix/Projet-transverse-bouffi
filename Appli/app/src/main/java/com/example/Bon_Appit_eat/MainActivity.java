@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuFragment menuFragment ;
     private RecetteFragment recetteFragment ;
     private SettingsFragment settingsFragment ;
+    private ImageButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
 
     private void InitializeFragments(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
