@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
@@ -49,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-           case R.id.navigation_Frigo:
-               InitializeFragments(frigoFragment);
+            case R.id.navigation_Frigo:
+                InitializeFragments(frigoFragment);
                 return true;
             case R.id.navigation_Liste:
                 InitializeFragments(listFragment);
@@ -64,10 +63,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
                 return true;
-
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-
     }
 
 
