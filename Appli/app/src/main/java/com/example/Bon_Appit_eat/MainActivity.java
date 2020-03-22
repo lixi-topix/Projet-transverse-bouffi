@@ -1,41 +1,82 @@
 package com.example.Bon_Appit_eat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
     private FrigoFragment frigoFragment;
     private ListFragment listFragment ;
     private MenuFragment menuFragment ;
     private RecetteFragment recetteFragment ;
     private SettingsFragment settingsFragment ;
+    //---add
+    private TextView textViewNameElement;
+    private TextView textViewQuantityElement;
+    //later unit by menu
     private ImageButton addButton;
+
+
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();
         recetteFragment = new RecetteFragment();
         settingsFragment = new SettingsFragment();
-        setContentView(R.layout.activity_main);
 
+        //add
+        textViewNameElement = (TextView) findViewById(R.id.texttest1);
+        textViewQuantityElement = (TextView) findViewById(R.id.texttest2);
         addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                InitializeFragments(frigoFragment);
+        // click on button open a dialog
+        addButton.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openDialog();
             }
         });
+       /* last method
+       addButton.setOnClickListener(new View.OnClickListener() {
+            // method to add a new element is called
+            public void onClick(View v) {
+
+                InitializeFragments(new DialogFragmentelement());
+
+            }
+        });*/
+
+
+    }
+    // open our dialog box
+    public void openDialog(){
+        DialogueElement dialogueElement = new DialogueElement();
+        dialogueElement.show(getSupportFragmentManager(), "element dialog");
+
+    }
+
+    @Override
+    public void applyTexts(String Name_new_element, String Quantity_new_element) {
+        textViewNameElement.setText(Name_new_element);
+        textViewQuantityElement.setText(Quantity_new_element);
     }
 
     @Override
