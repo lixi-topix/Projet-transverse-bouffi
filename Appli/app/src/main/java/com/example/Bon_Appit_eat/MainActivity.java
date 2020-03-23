@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     //---add
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
-    //later unit by menu
     private ImageButton addButton;
-
+    //later unit by menu
+    
 
     //
 
