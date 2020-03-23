@@ -11,6 +11,7 @@ I/ Partie utilisateur
 7. Gestion du frigo : base de données personelle contenant les aliments que possède l'utilisateur.
 8. Gestion de filtres (ex : alergies)
 
+en plus si le temps nécessaire
 II/ Partie nutritioniste 
 
 1. Créer des menus
@@ -22,7 +23,5 @@ II/ Partie nutritioniste
 
 Mail de Melekhova : melekhova@gmail.com
 
-todo :
-Partie technique
-Taches
-Gantt chart.
+Pour rejoindre notre Gant chart interactif: https://trello.com/invite/b/1ntL8Asv/315f278edd141e446210d6e0edc6d6fd/projet-transverse
+
