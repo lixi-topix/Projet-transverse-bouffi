@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
 
 
     }
+
+
     // open our dialog box
     public void openDialog(){
         DialogueElement dialogueElement = new DialogueElement();
@@ -116,5 +121,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         fragmentTransaction.commit(); // save changes
     }
 
-
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
+    }
 }
