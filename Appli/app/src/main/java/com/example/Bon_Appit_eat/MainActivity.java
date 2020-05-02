@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,9 +31,10 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     //---add
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
+    private TextView textViewQtySpinner;
     private ImageButton addButton;
     //later unit by menu
-    
+
 
     //
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         //add
         textViewNameElement = (TextView) findViewById(R.id.texttest1);
         textViewQuantityElement = (TextView) findViewById(R.id.texttest2);
+        textViewQtySpinner = (TextView) findViewById(R.id.texttest3);
         addButton = findViewById(R.id.addButton);
         // click on button open a dialog
         addButton.setOnClickListener( new View.OnClickListener(){
@@ -57,15 +60,6 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 openDialog();
             }
         });
-       /* last method
-       addButton.setOnClickListener(new View.OnClickListener() {
-            // method to add a new element is called
-            public void onClick(View v) {
-
-                InitializeFragments(new DialogFragmentelement());
-
-            }
-        });*/
 
 
     }
@@ -79,9 +73,10 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     }
 
     @Override
-    public void applyTexts(String Name_new_element, String Quantity_new_element) {
+    public void applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier) {
         textViewNameElement.setText(Name_new_element);
         textViewQuantityElement.setText(Quantity_new_element);
+        textViewQtySpinner.setText(Quantity_qualifier);
     }
 
     @Override

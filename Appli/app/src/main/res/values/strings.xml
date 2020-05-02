@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
+
+    <string-array name="choose_your_quantity" >
+        <item>none</item>
+        <item>cl</item>
+        <item>g</item>
+        <item>unit</item>
+    </string-array>
+
 </resources>
