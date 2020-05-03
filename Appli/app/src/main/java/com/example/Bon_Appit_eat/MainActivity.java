@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     private TextView textViewQtySpinner;
     private ImageButton addButton;
     //later unit by menu
-
+    DatabaseReference databaseReference;
 
     //
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("ingredients");
+
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();

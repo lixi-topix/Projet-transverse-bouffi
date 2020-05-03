@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
@@ -23,11 +25,15 @@ public class Register extends AppCompatActivity {
     Button mRegisterButton;
     TextView mLoginButton;
     FirebaseAuth fAuth;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
         mFirstName = findViewById(R.id.FirstName);
         mLastName = findViewById(R.id.LastName);
@@ -47,7 +53,9 @@ public class Register extends AppCompatActivity {
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmail.getText().toString().trim();
+                final String email = mEmail.getText().toString().trim();
+                final String firstName = mFirstName.getText().toString().trim();
+                final String lastName = mLastName.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
@@ -69,6 +77,9 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            String id = databaseReference.push().getKey();
+                            User user = new User(email,id,firstName,lastName);
+                            databaseReference.child(id).setValue(user);
                             Toast.makeText(Register.this, "User created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }
