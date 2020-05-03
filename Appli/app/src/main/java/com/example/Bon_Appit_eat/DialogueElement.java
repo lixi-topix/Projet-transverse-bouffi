@@ -50,7 +50,7 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
         edit_textNameElement = view.findViewById(R.id.edit_name_element);
         edit_textQuantityElement = view.findViewById(R.id.edit_quantity_element);
         spinner = view.findViewById(R.id.edit_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( getContext() ,  R.array.choose_your_quantity, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( getActivity() ,  R.array.choose_your_quantity, android.R.layout.simple_spinner_item);
         String[] list = getResources().getStringArray(R.array.choose_your_quantity);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
