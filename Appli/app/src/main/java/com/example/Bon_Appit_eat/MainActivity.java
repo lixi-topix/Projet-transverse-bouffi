@@ -104,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
                 return true;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -116,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         fragmentTransaction.commit(); // save changes
     }
 
-    public void logout(View view){
+    /*public void logout(View view){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
-    }
+    }*/
 }
