@@ -29,10 +29,10 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         final ListView listView = (ListView) view.findViewById(R.id.list_course_view);
-;
+
 
         final ArrayList<String> list_ingredient = new ArrayList<>();
-        //make request to the ddb and add it to the arraylist
+        //make request to the ddb and add it to the arraylist et concatenate avec la quantité
 
         list_ingredient.add("tomate");
         list_ingredient.add("fruit");
@@ -61,7 +61,6 @@ public class ListFragment extends Fragment {
                 listView.setAdapter(listViewAdapter);
             }
         });
-        System.out.println(list_ingredient);
         // Inflate the layout for this fragment
 
         return view;
