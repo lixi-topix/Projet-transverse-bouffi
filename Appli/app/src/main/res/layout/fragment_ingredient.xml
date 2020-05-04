@@ -41,7 +41,7 @@
         android:layout_width="186dp"
         android:layout_height="65dp"
         android:layout_marginHorizontal="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnPost" 
+        app:layout_constraintBottom_toTopOf="@+id/btnPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
