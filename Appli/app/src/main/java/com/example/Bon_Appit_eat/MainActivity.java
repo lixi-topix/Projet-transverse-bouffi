@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     private MenuFragment menuFragment ;
     private RecetteFragment recetteFragment ;
     private SettingsFragment settingsFragment ;
+    private IngredientFragment ingredientFragment ;
     //---add
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();
+        ingredientFragment = new IngredientFragment();
         recetteFragment = new RecetteFragment();
         settingsFragment = new SettingsFragment();
 
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 return true;
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
+                return true;
+                case R.id.navigation_ajouterIngrédient:
+                InitializeFragments(ingredientFragment);
                 return true;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();

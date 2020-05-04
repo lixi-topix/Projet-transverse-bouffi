@@ -31,6 +31,11 @@
         app:showAsAction="collapseActionView"/>
 
     <item
+        android:id="@+id/navigation_ajouterIngrédient"
+        android:title="Ajouter Ingrédient"
+        app:showAsAction="collapseActionView"/>
+
+    <item
         android:id="@+id/logout"
         android:title="Logout"
         app:showAsAction="collapseActionView"/>

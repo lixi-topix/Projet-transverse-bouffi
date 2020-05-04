@@ -16,10 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
+        android:src="@drawable/ingredient"/>
 
     <EditText
-        android:id="@+id/yourEmail"
+        android:id="@+id/ingredientnom"
 
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -27,46 +27,27 @@
         android:layout_marginTop="316dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
-        android:hint="Your Email"
-        android:inputType="textEmailAddress"
+        android:hint="nom de l'ingrédient"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/yourPhone"
 
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:hint="Your Phone"
-        android:inputType="phone"
+    <Spinner
+
+        android:id="@+id/spinnerIngredientType"
+        android:layout_width="186dp"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnPost" 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yourEmail" />
-
-
-
-    <EditText
-        android:id="@+id/descriptions"
-        android:layout_width="0dp"
-        android:layout_height="152dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Add more description about your pet"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yourPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredientnom"
+        app:layout_constraintVertical_bias="0.11"
+        android:entries="@array/choose_your_quantity" />
 
     <Button
         android:id="@+id/btnPost"
@@ -80,16 +61,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnMap"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="52dp"
-
-        android:text="Location"
-        app:layout_constraintBottom_toBottomOf="@id/yourEmail"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
