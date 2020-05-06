@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmail, mPassword;
     private Button mLoginButton;
@@ -38,53 +38,49 @@ public class Login extends AppCompatActivity {
         mRegisterButton = findViewById(R.id.RegisterText);
         mAuth = FirebaseAuth.getInstance();
 
-        if (mAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        if (mAuth.getCurrentUser() != null) {
+            Intent loggedInIntent = new Intent(getApplicationContext(), MainActivity.class);
+            loggedInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loggedInIntent);
             finish();
         }
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required !");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
+                } else if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
-                    return;
-                }
-
-                if (password.length() < 6){
+                } else if (password.length() < 6) {
                     mPassword.setError("Password must have at least 6 characters");
-                    return;
+                } else {
+                    mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Login is successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            } else {
+                                Toast.makeText(
+                                        LoginActivity.this,
+                                        "Email or password is wrong !" + Objects.requireNonNull(task.getException()).getMessage(),
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+                    });
                 }
-
-                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Login.this, "Login is successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-
-                        else{
-                            Toast.makeText(Login.this, "Email or password is wrong !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
             }
         });
     }

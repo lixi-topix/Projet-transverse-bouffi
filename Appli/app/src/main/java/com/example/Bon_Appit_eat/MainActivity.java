@@ -20,11 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
     private FrigoFragment frigoFragment;
-    private ListFragment listFragment ;
-    private MenuFragment menuFragment ;
-    private RecetteFragment recetteFragment ;
-    private SettingsFragment settingsFragment ;
-    private IngredientFragment ingredientFragment ;
+    private ListFragment listFragment;
+    private MenuFragment menuFragment;
+    private RecetteFragment recetteFragment;
+    private SettingsFragment settingsFragment;
+    private IngredientFragment ingredientFragment;
     //---add
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 return true;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
                 return true;
 

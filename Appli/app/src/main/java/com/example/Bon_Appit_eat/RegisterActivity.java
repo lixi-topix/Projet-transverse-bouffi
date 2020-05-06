@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText mFirstName, mLastName, mEmail, mPassword;
     private Button mRegisterButton;
@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 
@@ -73,13 +73,13 @@ public class Register extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 databaseReference
                                         .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
-                                        .setValue(new User(email,firstName,lastName))
+                                        .setValue(new User(firstName,lastName))
                                 ;
 
-                                Toast.makeText(Register.this, "User created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             } else {
-                                Toast.makeText(Register.this, "ERROR !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "ERROR !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
