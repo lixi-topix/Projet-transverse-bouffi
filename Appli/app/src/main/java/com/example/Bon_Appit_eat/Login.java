@@ -16,15 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
-    EditText mEmail, mPassword;
-    Button mLoginButton;
-    TextView mRegisterbutton;
-    FirebaseAuth fAuth;
+    private EditText mEmail, mPassword;
+    private Button mLoginButton;
+    private TextView mRegisterButton;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +35,15 @@ public class Login extends AppCompatActivity {
         mEmail = findViewById(R.id.Email);
         mPassword = findViewById(R.id.Password);
         mLoginButton = findViewById(R.id.LoginButton);
-        mRegisterbutton = findViewById(R.id.RegisterText);
-        fAuth = FirebaseAuth.getInstance();
+        mRegisterButton = findViewById(R.id.RegisterText);
+        mAuth = FirebaseAuth.getInstance();
 
-        if (fAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
 
-        mRegisterbutton.setOnClickListener(new View.OnClickListener() {
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Register.class));
@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -81,7 +81,7 @@ public class Login extends AppCompatActivity {
                         }
 
                         else{
-                            Toast.makeText(Login.this, "Email or password is wrong !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Email or password is wrong !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

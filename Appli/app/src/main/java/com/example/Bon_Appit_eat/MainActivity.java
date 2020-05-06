@@ -1,23 +1,17 @@
 package com.example.Bon_Appit_eat;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -56,12 +50,12 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         settingsFragment = new SettingsFragment();
 
         //add
-        textViewNameElement = (TextView) findViewById(R.id.texttest1);
-        textViewQuantityElement = (TextView) findViewById(R.id.texttest2);
-        textViewQtySpinner = (TextView) findViewById(R.id.texttest3);
+        textViewNameElement = findViewById(R.id.texttest1);
+        textViewQuantityElement = findViewById(R.id.texttest2);
+        textViewQtySpinner = findViewById(R.id.texttest3);
         addButton = findViewById(R.id.addButton);
         // click on button open a dialog
-        addButton.setOnClickListener( new View.OnClickListener(){
+        addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 openDialog();
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
                 return true;
-                case R.id.navigation_ajouterIngrédient:
+            case R.id.navigation_ajouterIngrédient:
                 InitializeFragments(ingredientFragment);
                 return true;
             case R.id.logout:

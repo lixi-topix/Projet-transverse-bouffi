@@ -19,13 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class Register extends AppCompatActivity {
 
-    EditText mFirstName, mLastName, mEmail, mPassword;
-    Button mRegisterButton;
-    TextView mLoginButton;
-    FirebaseAuth fAuth;
-    DatabaseReference databaseReference;
+    private EditText mFirstName, mLastName, mEmail, mPassword;
+    private Button mRegisterButton;
+    private TextView mLoginButton;
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class Register extends AppCompatActivity {
         mPassword = findViewById(R.id.Password);
         mLoginButton = findViewById(R.id.LoginText);
         mRegisterButton = findViewById(R.id.register_button);
-        fAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,37 +60,30 @@ public class Register extends AppCompatActivity {
                 final String lastName = mLastName.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is required !");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
+                if(TextUtils.isEmpty(email)) {
+                    mEmail.setError("Email is required");
+                } else if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
-                    return;
-                }
-
-                if (password.length() < 6){
+                } else if (password.length() < 6) {
                     mPassword.setError("Password must have at least 6 characters");
-                    return;
+                } else {
+                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                databaseReference
+                                        .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
+                                        .setValue(new User(email,firstName,lastName))
+                                ;
+
+                                Toast.makeText(Register.this, "User created", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            } else {
+                                Toast.makeText(Register.this, "ERROR !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            String id = databaseReference.push().getKey();
-                            User user = new User(email,id,firstName,lastName);
-                            databaseReference.child(id).setValue(user);
-                            Toast.makeText(Register.this, "User created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-
-                        else{
-                            Toast.makeText(Register.this, "ERROR !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
             }
         });
     }
