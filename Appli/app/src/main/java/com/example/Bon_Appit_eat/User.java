@@ -1,7 +1,7 @@
 package com.example.Bon_Appit_eat;
 
 public class User {
-    private String mail;
+    private String email;
     private String firstName;
     private String lastName;
 
@@ -9,14 +9,14 @@ public class User {
 
     }
 
-    public User(String mail, String firstName, String lastName){
-        this.mail = mail;
+    public User(String email, String firstName, String lastName){
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public String getMail() {
-        return mail;
+        return email;
     }
 
     public String getFirstName() {
