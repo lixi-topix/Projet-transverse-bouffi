@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.Objects;
 
@@ -27,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mRegisterButton;
     private TextView mLoginButton;
     private FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference mDatabaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+        mAuth = FirebaseAuth.getInstance();
 
         mFirstName = findViewById(R.id.FirstName);
         mLastName = findViewById(R.id.LastName);
@@ -43,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.Password);
         mLoginButton = findViewById(R.id.LoginText);
         mRegisterButton = findViewById(R.id.register_button);
-        mAuth = FirebaseAuth.getInstance();
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,13 +74,13 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                databaseReference
-                                        .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
-                                        .setValue(new User(firstName,lastName))
-                                ;
+
+                                DatabaseReference databaseUser = mDatabaseUsers.child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+                                databaseUser.child("firstName").setValue(firstName);
+                                databaseUser.child("lastName").setValue(lastName);
 
                                 Toast.makeText(RegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                updateUI(mAuth.getCurrentUser());
                             } else {
                                 Toast.makeText(RegisterActivity.this, "ERROR !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -86,5 +89,20 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        updateUI(mAuth.getCurrentUser());
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(mainIntent);
+        }
     }
 }

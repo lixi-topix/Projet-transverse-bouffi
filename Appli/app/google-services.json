@@ -15,19 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "914008605775-em62r740i1jsq9b5ae9vdtd8gbqhm3bj.apps.googleusercontent.com",
+          "client_id": "914008605775-41v4d4v2uaivvad1o5batk2kpc3dpkur.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.Bon_Appit_eat",
-            "certificate_hash": "dca6d8d1201a539bb8e6ee51bb3df71b0359fcaa"
-          }
-        },
-        {
-          "client_id": "914008605775-r724vgt83d5gjh79mhlj1t3c22f0m7jn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.Bon_Appit_eat",
-            "certificate_hash": "f869e8514afbfc7b0763fbd180f37846c62416ec"
+            "certificate_hash": "945523eef223de367c35e3a4a1a4c5be78db0e59"
           }
         },
         {
