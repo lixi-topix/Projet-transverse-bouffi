@@ -14,13 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD
 
-=======
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
->>>>>>> master
 
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
@@ -39,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
 
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     //
 
@@ -47,12 +45,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-=======
-        databaseReference = FirebaseDatabase.getInstance().getReference("ingredients");
+        mDatabase = FirebaseDatabase.getInstance().getReference("ingredients");
         mAuth = FirebaseAuth.getInstance();
 
->>>>>>> master
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();

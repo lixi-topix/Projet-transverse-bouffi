@@ -17,11 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD:Appli/app/src/main/java/com/example/Bon_Appit_eat/Register.java
-
-=======
 import com.google.firebase.auth.FirebaseUser;
->>>>>>> master:Appli/app/src/main/java/com/example/Bon_Appit_eat/RegisterActivity.java
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
