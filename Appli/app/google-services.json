@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "914008605775-mi0i8dmj6cehr8ciauaueor3egm1k6lm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.Bon_Appit_eat",
+            "certificate_hash": "0e0355cbfb36263bdde8549fa808477771366f24"
+          }
+        },
+        {
           "client_id": "914008605775-em62r740i1jsq9b5ae9vdtd8gbqhm3bj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
