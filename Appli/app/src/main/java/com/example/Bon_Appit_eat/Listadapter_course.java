@@ -15,7 +15,7 @@ public class Listadapter_course extends BaseAdapter{
     private ArrayList<Listcourse_Element> listelement;
         private Context context;
 
-        private Listadapter_course(Context context, ArrayList<Listcourse_Element> listelement) {
+        Listadapter_course(Context context, ArrayList<Listcourse_Element> listelement) {
             this.context = context;
             this.listelement = listelement;
         }

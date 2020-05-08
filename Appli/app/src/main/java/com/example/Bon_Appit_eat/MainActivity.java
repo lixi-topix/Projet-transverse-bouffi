@@ -98,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 InitializeFragments(frigoFragment);
                 return true;
             case R.id.navigation_Liste:
-                //
-                InitializeFragments(listFragment);
+
+                //InitializeFragments(listFragment);
+                startActivity(new Intent(getApplicationContext(), ListActivity.class));
                 return true;
             case R.id.navigation_Menu:
                 InitializeFragments(menuFragment);
@@ -139,4 +140,5 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
             startActivity(loginIntent);
         }
     }
+
 }
