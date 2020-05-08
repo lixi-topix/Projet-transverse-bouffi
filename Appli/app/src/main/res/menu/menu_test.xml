@@ -2,14 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/mainActivity"
-        android:title="Main"
-        app:showAsAction="collapseActionView" />
+    <item android:id="@+id/group"
+        android:title="Group"
+        android:icon="@mipmap/baseline_reorder_white_24"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/mainActivity"
+                android:title="Main"
+                app:showAsAction="collapseActionView" />
 
-    <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/logout"
+                android:title="Logout"
+                app:showAsAction="collapseActionView"/>
+        </menu>
+    </item>
 
 </menu>

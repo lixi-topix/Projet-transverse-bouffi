@@ -4,45 +4,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_Frigo"
-        android:title="Frigo"
-        app:showAsAction="collapseActionView"/>
+        android:id="@+id/group"
+        android:title="Group"
+        android:icon="@mipmap/baseline_reorder_white_24"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/navigation_Frigo"
+                android:title="Frigo"
+                app:showAsAction="collapseActionView"/>
 
 
-    <item
-        android:id="@+id/navigation_Menu"
-        android:title="Menu"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/navigation_Menu"
+                android:title="Menu"
+                app:showAsAction="collapseActionView"/>
 
 
-    <item
-        android:id="@+id/navigation_Recette"
-        android:title="Recette"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/navigation_Recette"
+                android:title="Recette"
+                app:showAsAction="collapseActionView"/>
 
-    <item
-        android:id="@+id/navigation_Liste"
-        android:title="Liste course"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/navigation_Liste"
+                android:title="Liste course"
+                app:showAsAction="collapseActionView"/>
 
-    <item
-        android:id="@+id/navigation_Settings"
-        android:title="Settings"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/navigation_Settings"
+                android:title="Settings"
+                app:showAsAction="collapseActionView"/>
 
-    <item
-        android:id="@+id/navigation_ajouterIngrédient"
-        android:title="Ajouter Ingrédient"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/navigation_ajouterIngrédient"
+                android:title="Ajouter Ingrédient"
+                app:showAsAction="collapseActionView"/>
 
-    <item
-        android:id="@+id/test"
-        android:title="Test"
-        app:showAsAction="collapseActionView" />
+            <item
+                android:id="@+id/test"
+                android:title="Test"
+                app:showAsAction="collapseActionView" />
 
-    <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        app:showAsAction="collapseActionView"/>
+            <item
+                android:id="@+id/logout"
+                android:title="Logout"
+                app:showAsAction="collapseActionView"/>
+        </menu>
+    </item>
 
 </menu>
