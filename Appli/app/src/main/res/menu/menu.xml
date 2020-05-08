@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/navigation_Frigo"
-        android:title="Frigo2"
+        android:title="Frigo"
         app:showAsAction="collapseActionView"/>
 
 
@@ -34,6 +34,11 @@
         android:id="@+id/navigation_ajouterIngrédient"
         android:title="Ajouter Ingrédient"
         app:showAsAction="collapseActionView"/>
+
+    <item
+        android:id="@+id/test"
+        android:title="Test"
+        app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/logout"

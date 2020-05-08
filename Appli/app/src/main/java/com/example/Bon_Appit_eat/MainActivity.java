@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
             case R.id.navigation_ajouterIngrédient:
                 InitializeFragments(ingredientFragment);
                 return true;
+            case R.id.test:
+                startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                return true;
             case R.id.logout:
                 mAuth.signOut();
                 updateUI(mAuth.getCurrentUser());

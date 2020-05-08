@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Bon Appet\'Eat</string>
 
-    <string-array name="choose_your_quantity" >
+    <string-array name="choose_your_quantity">
         <item>choisir type</item>
         <item>cl</item>
         <item>g</item>
