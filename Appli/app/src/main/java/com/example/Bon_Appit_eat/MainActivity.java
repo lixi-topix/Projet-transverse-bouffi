@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
 
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
 
     //
 
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("ingredients");
         mAuth = FirebaseAuth.getInstance();
 
         frigoFragment = new FrigoFragment();

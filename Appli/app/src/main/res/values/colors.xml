@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
-    <color name="primary">#FF5A5F</color>
+
+    <!-- APP BASE -->
+    <color name="colorPrimary">#eb1c24</color>
+    <color name="colorPrimaryDark">#d3181f</color>
+    <color name="colorAccent">#000000</color>
+
+    <!-- BACKGROUND -->
+    <color name="background_light">#fafafa</color>
+    <color name="background_gray">#eeeeee</color>
+
+    <!-- TEXTVIEW -->
+    <color name="text_normal_dark">#8a000000</color>
+
+    <!-- BUTTON -->
+    <color name="button_favorite">#F06292</color>
 </resources>
