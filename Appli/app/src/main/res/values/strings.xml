@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Bon Appet\'Eat</string>
 
     <string-array name="choose_your_quantity" >
         <item>choisir type</item>

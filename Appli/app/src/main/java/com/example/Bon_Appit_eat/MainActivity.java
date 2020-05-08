@@ -14,16 +14,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
+<<<<<<< HEAD
 
+=======
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+>>>>>>> master
 
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
     private FrigoFragment frigoFragment;
-    private ListFragment listFragment ;
-    private MenuFragment menuFragment ;
-    private RecetteFragment recetteFragment ;
-    private SettingsFragment settingsFragment ;
-    private IngredientFragment ingredientFragment ;
+    private ListFragment listFragment;
+    private MenuFragment menuFragment;
+    private RecetteFragment recetteFragment;
+    private SettingsFragment settingsFragment;
+    private IngredientFragment ingredientFragment;
     //---add
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
     //later unit by menu
 
 
+    private FirebaseAuth mAuth;
+
     //
 
     @Override
@@ -39,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
+=======
+        databaseReference = FirebaseDatabase.getInstance().getReference("ingredients");
+        mAuth = FirebaseAuth.getInstance();
+
+>>>>>>> master
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();
@@ -58,16 +72,19 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 openDialog();
             }
         });
-
-
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        updateUI(mAuth.getCurrentUser());
+    }
 
     // open our dialog box
     public void openDialog(){
         DialogueElement dialogueElement = new DialogueElement();
         dialogueElement.show(getSupportFragmentManager(), "element dialog");
-
     }
 
     @Override
@@ -106,16 +123,14 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 InitializeFragments(ingredientFragment);
                 return true;
             case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                mAuth.signOut();
+                updateUI(mAuth.getCurrentUser());
                 finish();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void InitializeFragments(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -123,9 +138,11 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         fragmentTransaction.commit(); // save changes
     }
 
-    /*public void logout(View view){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
-    }*/
+    private void updateUI(FirebaseUser user) {
+        if (user == null) {
+            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loginIntent);
+        }
+    }
 }
