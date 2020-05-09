@@ -2,6 +2,8 @@ package com.example.Bon_Appit_eat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,12 +62,8 @@ public class Listadapter_course extends BaseAdapter{
                 row=convertView;
                 listViewHolder= (ListCourseViewHolder) row.getTag();
             }
-            System.out.println("################################################################");
-            System.out.println(getCount());
-            System.out.println(position);
+
             final Listcourse_Element listcourse_element = getItem(position);
-            System.out.println(getItem(position));
-            System.out.println(listcourse_element.CartQuantity +"  name "+listcourse_element.Ingredient_name + " img "+listcourse_element.Ingredient_img+" Qtytineed "+listcourse_element.Qty_needed );
             listViewHolder.ingredient_name.setText(listcourse_element.Ingredient_name);
             listViewHolder.img_ingredient.setImageResource(R.mipmap.default_icon);
             listViewHolder.ingredient_qty.setText(listcourse_element.Qty_needed+"");
@@ -85,8 +83,37 @@ public class Listadapter_course extends BaseAdapter{
 
                 }
             });
+            listViewHolder.editTextQuantity.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    String editTextChanged = listViewHolder.editTextQuantity.getText().toString();
+                    editTextapply(position, listViewHolder.editTextQuantity,editTextChanged);
+                }
+
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
             return row;
+        }
+
+        private void editTextapply(int position, EditText edTextQuantity , String Qty) {
+            Listcourse_Element listcourse_element = getItem(position);
+            System.out.println("position :"+position+" edQuantity"+ edTextQuantity +"#########"+Qty);
+           if (Integer.parseInt(String.valueOf(Qty)) > 0){
+                listcourse_element.CartQuantity = Integer.parseInt(String.valueOf(Qty));
+                //edTextQuantity.setText(listcourse_element.CartQuantity+"");
+            }
+           edTextQuantity.setText(Qty);
+
         }
 
         private void updateQuantity(int position, EditText edTextQuantity, int value) {

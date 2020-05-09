@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -44,7 +43,7 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
                         String Name_new_element = edit_textNameElement.getText().toString();
                         String Quantity_new_element = edit_textQuantityElement.getText().toString();
                         //ajouter choix spinner
-                        listener.applyTexts(Name_new_element,Quantity_new_element,text_spinner);
+                        listener.Creation_new_element(Name_new_element,Quantity_new_element,text_spinner);
                     }
                 });
         edit_textNameElement = view.findViewById(R.id.edit_name_element);
@@ -82,7 +81,8 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
     }
 
     public interface DialogueElementListener{
-        void  applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier );
+        //void  applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier );
+        void Creation_new_element(String Name_new_element, String Quantity_new_element, String Quantity_qualifier );
     }
 
 }

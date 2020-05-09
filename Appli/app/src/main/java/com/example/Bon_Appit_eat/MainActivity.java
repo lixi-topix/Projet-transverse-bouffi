@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
+public class MainActivity extends AppCompatActivity {
 
     private FrigoFragment frigoFragment;
     private ListFragment listFragment;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         recetteFragment = new RecetteFragment();
         settingsFragment = new SettingsFragment();
 
-        //add
+       /* //add
         textViewNameElement = findViewById(R.id.texttest1);
         textViewQuantityElement = findViewById(R.id.texttest2);
         textViewQtySpinner = findViewById(R.id.texttest3);
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
             public void onClick(View view){
                 openDialog();
             }
-        });
+        });*/
     }
 
     @Override
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         dialogueElement.show(getSupportFragmentManager(), "element dialog");
     }
 
-    @Override
+    //@Override
     public void applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier) {
         textViewNameElement.setText(Name_new_element);
         textViewQuantityElement.setText(Quantity_new_element);
