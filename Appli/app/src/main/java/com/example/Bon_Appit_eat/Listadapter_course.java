@@ -1,5 +1,6 @@
 package com.example.Bon_Appit_eat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class Listadapter_course extends BaseAdapter{
 
         @Override
         public Listcourse_Element getItem(int position) {
-            return listelement.get(position);
+            return (listelement.get(position));
         }
 
         @Override
@@ -35,6 +36,7 @@ public class Listadapter_course extends BaseAdapter{
             return 0;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(final int position, View convertView
                 , ViewGroup parent) {
@@ -43,11 +45,11 @@ public class Listadapter_course extends BaseAdapter{
             if(convertView == null)
             {
                 LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = layoutInflater.inflate(R.layout.activity_custom_listviewcourse,parent,false);
+                row = layoutInflater.inflate(R.layout.list_course_fragment,parent,false);
                 listViewHolder = new ListCourseViewHolder();
                 listViewHolder.img_ingredient = row.findViewById(R.id.img_ingredient);
                 listViewHolder.ingredient_name = row.findViewById(R.id.ingredient_name);
-                listViewHolder.ingredient_qty = row.findViewById(R.id.ingredient_qty);
+                listViewHolder.ingredient_qty = row.findViewById(R.id.ingredient_qty_need);
                 listViewHolder.ib_addnew = row.findViewById(R.id.ib_addnew);
                 listViewHolder.editTextQuantity = row.findViewById(R.id.editTextQuantity);
                 listViewHolder.ib_remove = row.findViewById(R.id.ib_remove);
@@ -58,10 +60,14 @@ public class Listadapter_course extends BaseAdapter{
                 row=convertView;
                 listViewHolder= (ListCourseViewHolder) row.getTag();
             }
+            System.out.println("################################################################");
+            System.out.println(getCount());
+            System.out.println(position);
             final Listcourse_Element listcourse_element = getItem(position);
-
+            System.out.println(getItem(position));
+            System.out.println(listcourse_element.CartQuantity +"  name "+listcourse_element.Ingredient_name + " img "+listcourse_element.Ingredient_img+" Qtytineed "+listcourse_element.Qty_needed );
             listViewHolder.ingredient_name.setText(listcourse_element.Ingredient_name);
-            listViewHolder.img_ingredient.setImageResource(listcourse_element.Ingredient_img);
+            listViewHolder.img_ingredient.setImageResource(R.mipmap.default_icon);
             listViewHolder.ingredient_qty.setText(listcourse_element.Qty_needed+"");
             listViewHolder.editTextQuantity.setText(listcourse_element.CartQuantity+"");
             listViewHolder.ib_addnew.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +77,7 @@ public class Listadapter_course extends BaseAdapter{
                     updateQuantity(position,listViewHolder.editTextQuantity,1);
                 }
             });
-            listViewHolder.editTextQuantity.setText("0");
+
             listViewHolder.ib_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
