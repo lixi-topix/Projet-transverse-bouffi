@@ -3,13 +3,10 @@ package com.example.Bon_Appit_eat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        mEmail = findViewById(R.id.Email);
-        mPassword = findViewById(R.id.Password);
+        mEmail = findViewById(R.id.email_register);
+        mPassword = findViewById(R.id.password_register);
         mLoginButton = findViewById(R.id.LoginButton);
         mRegisterButton = findViewById(R.id.RegisterText);
         mAuth = FirebaseAuth.getInstance();
@@ -47,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -96,5 +94,13 @@ public class LoginActivity extends AppCompatActivity {
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(mainIntent);
         }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

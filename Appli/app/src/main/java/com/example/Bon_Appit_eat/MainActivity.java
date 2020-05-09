@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 return true;
             case R.id.test:
                 startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.logout:
                 mAuth.signOut();
