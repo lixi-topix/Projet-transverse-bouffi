@@ -7,6 +7,9 @@
         <item>g</item>
         <item>unit</item>
     </string-array>
+    <string name="Test">
+    Test
+    </string>
 
 
 </resources>

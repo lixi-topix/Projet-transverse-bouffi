@@ -29,7 +29,6 @@ public class IngredientFragment extends Fragment {
         postButton = view.findViewById(R.id.btnPost);
         postButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-             Log.d("test","prout");   // Code here executes on main thread after user presses button
                 ingredientName = view.findViewById(R.id.ingredientnom);
                // ingredientQuantity = view.findViewById(R.id.quantity);
                 ingredientType = view.findViewById(R.id.spinnerIngredientType);

@@ -2,6 +2,7 @@ package com.example.Bon_Appit_eat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,15 +17,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
 
     private FrigoFragment frigoFragment;
     private ListFragment listFragment;
     private MenuFragment menuFragment;
-    private RecetteFragment recetteFragment;
+    private RecetteActivity recetteActivity;
     private SettingsFragment settingsFragment;
     private IngredientFragment ingredientFragment;
     //---add
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();
         ingredientFragment = new IngredientFragment();
-        recetteFragment = new RecetteFragment();
         settingsFragment = new SettingsFragment();
 
         //add
@@ -107,7 +105,12 @@ public class MainActivity extends AppCompatActivity implements DialogueElement.D
                 InitializeFragments(menuFragment);
                 return true;
             case R.id.navigation_Recette:
-                InitializeFragments(recetteFragment);
+                Log.d("prout", "test 1 ");
+                Intent RecetteIntent = new Intent(getApplicationContext(), RecetteActivity.class);
+                RecetteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(RecetteIntent);
+
+                Log.d("prout", "test 2 ");
                 return true;
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
