@@ -10,6 +10,9 @@
     <string name="Test">
     Test
     </string>
+    <string name="FindYourIngredient">
+    Enter Ingredient Name
+    </string>
 
 
 </resources>
