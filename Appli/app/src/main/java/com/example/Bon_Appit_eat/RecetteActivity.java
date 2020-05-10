@@ -113,8 +113,9 @@ public class RecetteActivity extends AppCompatActivity{
             }
         });
         return newIngredient;
-
-
+    }
+    public interface AddToRecetteListener{
+        void getIngredientId(String ingredientID );
     }
 
 }
