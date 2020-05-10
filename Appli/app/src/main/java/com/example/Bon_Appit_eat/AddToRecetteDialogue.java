@@ -43,10 +43,6 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment  {
     private View view;
 
 
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -109,16 +105,6 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment  {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-
-
-
-
-    }
-
-    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
@@ -130,6 +116,10 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment  {
     }
 
     public interface AddIngredientListener {
-            void applyText(String ingredient);
+        void applyText(String ingredient);
+    }
+
+    public interface addToRecetteListener{
+        void getIngredientId(String ingredientID );
     }
 }
