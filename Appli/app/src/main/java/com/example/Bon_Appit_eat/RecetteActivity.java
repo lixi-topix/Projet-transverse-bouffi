@@ -13,11 +13,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import static android.content.ContentValues.TAG;
 
 
-public class RecetteActivity extends AppCompatActivity{
+public class RecetteActivity extends AppCompatActivity implements {
 
+    private DatabaseReference mDatabase;
     private LinearLayout ll;
     private ScrollView sv;
     private GridLayout newIngredient;
@@ -29,7 +33,8 @@ public class RecetteActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: PROUTTT");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         sv = new ScrollView(this);
@@ -114,8 +119,6 @@ public class RecetteActivity extends AppCompatActivity{
         });
         return newIngredient;
     }
-    public interface AddToRecetteListener{
-        void getIngredientId(String ingredientID );
-    }
+
 
 }
