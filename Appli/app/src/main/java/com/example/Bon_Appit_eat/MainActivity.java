@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,10 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RootActivity {
 
     private FrigoFragment frigoFragment;
     private ListFragment listFragment;
@@ -28,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
     private TextView textViewQtySpinner;
-    private ImageButton addButton;
+    private FloatingActionButton addButton;
     //later unit by menu
 
 
-    private FirebaseAuth mAuth;
 
     //
 
@@ -41,33 +42,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
 
         frigoFragment = new FrigoFragment();
         listFragment = new ListFragment();
         menuFragment = new MenuFragment();
         ingredientFragment = new IngredientFragment();
         settingsFragment = new SettingsFragment();
+        addButton = findViewById(R.id.fab);
 
-       /* //add
-        textViewNameElement = findViewById(R.id.texttest1);
-        textViewQuantityElement = findViewById(R.id.texttest2);
-        textViewQtySpinner = findViewById(R.id.texttest3);
-        addButton = findViewById(R.id.addButton);
-        // click on button open a dialog
-        addButton.setOnClickListener(new View.OnClickListener(){
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                openDialog();
+            public void onClick(View v) {
+                updateUIConnected(new Intent(getApplicationContext(), TestActivity.class));
             }
-        });*/
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        updateUI(mAuth.getCurrentUser());
+        updateUIConnected(null);
     }
 
     // open our dialog box
@@ -98,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.navigation_Liste:
                 //InitializeFragments(listFragment);
-                startActivity(new Intent(getApplicationContext(), ListActivity.class));
+                updateUIConnected(new Intent(getApplicationContext(), ListActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Menu:
                 InitializeFragments(menuFragment);
                 return true;
             case R.id.navigation_Recette:
-                startActivity(new Intent(getApplicationContext(), RecetteActivity.class));
+                updateUIConnected(new Intent(getApplicationContext(), RecetteActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Settings:
@@ -115,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 InitializeFragments(ingredientFragment);
                 return true;
             case R.id.test:
-                startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                updateUIConnected(new Intent(getApplicationContext(), TestActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.logout:
                 mAuth.signOut();
-                updateUI(mAuth.getCurrentUser());
+                updateUIConnected(null);
                 finish();
                 return true;
             default:
@@ -133,13 +129,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit(); // save changes
     }
-
-    private void updateUI(FirebaseUser user) {
-        if (user == null) {
-            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(loginIntent);
-        }
-    }
-
 }

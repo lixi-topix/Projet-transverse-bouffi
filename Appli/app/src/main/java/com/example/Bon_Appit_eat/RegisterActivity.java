@@ -37,13 +37,12 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends RootActivity {
 
     private EditText mFirstName, mLastName, mEmail, mPassword, mConfirmPassword;
     private Button mRegisterButton;
     private TextView mLoginButton;
     private de.hdodenhof.circleimageview.CircleImageView mProfilePic;
-    private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseUsers;
     private StorageReference mStorage;
     private ProgressDialog mProgressDialog;
@@ -58,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
 
         mFirstName = findViewById(R.id.FirstName);
@@ -75,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                updateUINotConnected(new Intent(getApplicationContext(), LoginActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -124,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 mProgressDialog.dismiss();
 
                                 Toast.makeText(RegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
-                                updateUI(mAuth.getCurrentUser());
+                                updateUINotConnected(null);
                             } else {
                                 Toast.makeText(RegisterActivity.this, "ERROR !" + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -171,15 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        updateUI(mAuth.getCurrentUser());
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(mainIntent);
-        }
+        updateUINotConnected(null);
     }
 
     @Override
