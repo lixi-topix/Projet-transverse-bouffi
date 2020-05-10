@@ -3,6 +3,7 @@ package com.example.Bon_Appit_eat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,12 +21,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends RootActivity {
 
     private EditText mEmail, mPassword;
     private Button mLoginButton;
     private TextView mRegisterButton;
-    private FirebaseAuth mAuth;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password_register);
         mLoginButton = findViewById(R.id.LoginButton);
         mRegisterButton = findViewById(R.id.RegisterText);
-        mAuth = FirebaseAuth.getInstance();
+        mProgressDialog = new ProgressDialog(this);
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                updateUINotConnected(new Intent(getApplicationContext(), RegisterActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -58,16 +60,17 @@ public class LoginActivity extends AppCompatActivity {
                     mEmail.setError("Email is required !");
                 } else if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
-                } else if (password.length() < 6) {
-                    mPassword.setError("Password must have at least 6 characters");
                 } else {
+                    mProgressDialog.setMessage("Logging In");
+                    mProgressDialog.show();
                     mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Login is successful", Toast.LENGTH_SHORT).show();
-                                updateUI(mAuth.getCurrentUser());
+                                mProgressDialog.dismiss();
+                                updateUINotConnected(null);
                             } else {
+                                mProgressDialog.dismiss();
                                 Toast.makeText(
                                         LoginActivity.this,
                                         "Email or password is wrong !" + Objects.requireNonNull(task.getException()).getMessage(),
@@ -85,15 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        updateUI(mAuth.getCurrentUser());
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(mainIntent);
-        }
+        updateUINotConnected(null);
     }
 
     @Override

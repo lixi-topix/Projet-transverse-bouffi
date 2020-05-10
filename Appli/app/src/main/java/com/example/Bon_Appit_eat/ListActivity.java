@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ListActivity extends AppCompatActivity implements DialogueElement.DialogueElementListener {
+public class ListActivity extends RootActivity implements DialogueElement.DialogueElementListener {
 
     private ListView listView;
     private ListAdapter listAdapter;
@@ -25,7 +25,6 @@ public class ListActivity extends AppCompatActivity implements DialogueElement.D
     ArrayList<Listcourse_Element> productBuy = new ArrayList<>();
     private DatabaseReference databaseReference;
     private DatabaseReference FrigoIngredient;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,6 @@ public class ListActivity extends AppCompatActivity implements DialogueElement.D
             }
         });
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
         //gérer l'écriture dans l'edit text
     }
 

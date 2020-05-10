@@ -39,12 +39,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends RootActivity {
     private Button mSelectImage;
     private ProgressDialog mProgressDialog;
     private ImageView mImageView;
 
-    private FirebaseAuth mAuth;
     private StorageReference mStorage;
 
     private static final int GALLERY_INTENT = 1;
@@ -54,7 +53,6 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
 
         mSelectImage = findViewById(R.id.pickImage);
@@ -114,7 +112,7 @@ public class TestActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        updateUI(mAuth.getCurrentUser());
+        updateUIConnected(null);
     }
 
     @Override
@@ -129,7 +127,7 @@ public class TestActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.logout:
                 mAuth.signOut();
-                updateUI(mAuth.getCurrentUser());
+                updateUIConnected(null);
                 finish();
                 return true;
             case R.id.mainActivity:
@@ -138,14 +136,6 @@ public class TestActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user == null) {
-            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(loginIntent);
         }
     }
 
