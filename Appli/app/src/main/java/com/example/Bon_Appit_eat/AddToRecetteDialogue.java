@@ -21,14 +21,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddToRecetteDialogue extends AppCompatDialogFragment  {
+
+    private EditText edit_textNameElement;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.Test)
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.addtorecettedialogue, null);
+
+        builder.setView(view).setTitle(R.string.FindYourIngredient)
                 .setPositiveButton(R.string.Test, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
                     }
                 })
                 .setNegativeButton(R.string.Test, new DialogInterface.OnClickListener() {
@@ -36,6 +42,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment  {
                         // User cancelled the dialog
                     }
                 });
+        edit_textNameElement = view.findViewById(R.id.edit_name_element);
         // Create the AlertDialog object and return it
         return builder.create();
     }
