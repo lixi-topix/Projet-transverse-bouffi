@@ -46,7 +46,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment  {
         // Create the AlertDialog object and return it
         return builder.create();
     }
-    public interface AddToRecetteListener{
+    public interface addToRecetteListener{
         void getIngredientId(String ingredientID );
     }
 }
