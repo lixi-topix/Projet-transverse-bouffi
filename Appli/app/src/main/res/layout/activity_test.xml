@@ -4,27 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".TestActivity">
 
-    <Button
-        android:id="@+id/pickImage"
+    <AutoCompleteTextView
+        android:id="@+id/countries_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:text="Pick Image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageFromDb"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

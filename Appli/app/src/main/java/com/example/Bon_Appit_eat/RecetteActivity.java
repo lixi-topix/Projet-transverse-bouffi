@@ -16,39 +16,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import static android.content.ContentValues.TAG;
 
 
-public class RecetteActivity extends AppCompatActivity{
+public class RecetteActivity extends RootActivity implements AddToRecetteDialogue.AddIngredientListener {
 
     private LinearLayout ll;
     private ScrollView sv;
     private GridLayout newIngredient;
     private EditText rDescription;
     private Button rPost;
+    private Button mAdd;
     private TextView textViewNameElement;
     private TextView textViewQuantityElement;
     private TextView textViewQtySpinner;
+    private TextView mIngredient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.edittext);
         Log.d(TAG, "onCreate: PROUTTT");
 
 
-        sv = new ScrollView(this);
-        ll = new LinearLayout(this);
-        ll.setOrientation(LinearLayout.VERTICAL);
-        sv.addView(ll);
-        setContentView(sv);
+        mAdd = findViewById(R.id.btningrédientPlus);
+        mIngredient = findViewById(R.id.ingrédientRecette);
 
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
-
-
-
-        TextView tv = new TextView(this);
-        tv.setText("We are already thrilled by your new recipe!");
-        ll.addView(tv);
-
-        EditText et = new EditText(this);
-        et.setHint("Name of the recipe");
-        ll.addView(et);
 
 
 
@@ -73,34 +70,26 @@ public class RecetteActivity extends AppCompatActivity{
         });
 */
 
-        ll.addView(addIngredient());
+    }
 
-
-        setContentView(R.layout.edittext);
-        rDescription = this.findViewById(R.id.descriptionsRecette) ;
-        if(rDescription.getParent()!=null){
-            ((ViewGroup)rDescription.getParent()).removeView(rDescription);
-        }
-        ll.addView(rDescription);
-        rPost= this.findViewById(R.id.btnPostRecette) ;
-        if(rPost.getParent()!=null){
-            ((ViewGroup)rPost.getParent()).removeView(rPost);
-        }
-        ll.addView(rPost);
-        setContentView(sv);
-
+    public void openDialog() {
+        AddToRecetteDialogue dialog = new AddToRecetteDialogue();
+        dialog.show(getSupportFragmentManager(), "add ingredient");
     }
 
 
 
 
     private View addIngredient(){
-        setContentView(R.layout.edittext);
-        newIngredient = this.findViewById(R.id.gridingrédient) ;
+        newIngredient = findViewById(R.id.gridingrédient);
+
         if(newIngredient.getParent() != null) {
-            ((ViewGroup)newIngredient.getParent()).removeView(newIngredient); // <- fix
+            ((ViewGroup) newIngredient.getParent()).removeView(newIngredient); // <- fix
         }
-        View button =newIngredient.getChildAt(2);
+
+
+
+        View button = newIngredient.getChildAt(2);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,8 +103,9 @@ public class RecetteActivity extends AppCompatActivity{
         });
         return newIngredient;
     }
-    public interface AddToRecetteListener{
-        void getIngredientId(String ingredientID );
-    }
 
+    @Override
+    public void applyText(String ingredient) {
+        mIngredient.setText(ingredient);
+    }
 }

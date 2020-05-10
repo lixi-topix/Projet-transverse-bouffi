@@ -1,9 +1,11 @@
 package com.example.Bon_Appit_eat;
 
+import androidx.annotation.NonNull;
+
 public class Ingredient {
 
-    String Name;
-    String Type;
+    private String Name;
+    private String Type;
 
     Ingredient(){
 
@@ -27,4 +29,9 @@ public class Ingredient {
         Type = type;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return Name + " " + Type;
+    }
 }

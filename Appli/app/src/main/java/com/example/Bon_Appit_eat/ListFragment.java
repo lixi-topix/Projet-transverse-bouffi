@@ -63,7 +63,7 @@ public class ListFragment extends Fragment {
 
                     ingredient = ds.getValue(Ingredient.class);
                     list_ingredient.add(ingredient);
-                    list_nameIngredient.add(ingredient.Name);
+                    list_nameIngredient.add(ingredient.getName());
                 }
                 listView.setAdapter(listViewAdapter);
             }
