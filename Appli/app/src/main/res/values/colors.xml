@@ -5,7 +5,7 @@
     <!-- APP BASE -->
     <color name="colorPrimary">#eb1c24</color>
     <color name="colorPrimaryDark">#d3181f</color>
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#C84747</color>
 
     <!-- BACKGROUND -->
     <color name="background_light">#fafafa</color>

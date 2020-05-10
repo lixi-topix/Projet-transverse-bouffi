@@ -47,20 +47,20 @@
 
 
     <ImageButton
-    android:id="@+id/ib_addnew"
-    android:layout_width="50dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="8dp"
-    android:adjustViewBounds="true"
-    android:background="#00ffffff"
-    android:cropToPadding="false"
-    android:scaleType="centerInside"
-    android:src="@mipmap/ic_plus"
-    app:layout_constraintLeft_toRightOf="@+id/ingredient_qty_need"
-    app:layout_constraintStart_toEndOf="@+id/ingredient_qty_need"
-    app:layout_constraintTop_toBottomOf="@+id/ingredient_name" />
+        android:id="@+id/ib_addnew"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="#00ffffff"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/baseline_add_circle_black_24"
+        app:layout_constraintLeft_toRightOf="@+id/ingredient_qty_need"
+        app:layout_constraintStart_toEndOf="@+id/ingredient_qty_need"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_name" />
 
     <EditText
     android:id="@+id/editTextQuantity"
@@ -81,17 +81,17 @@
 
 
     <ImageButton
-    android:id="@+id/ib_remove"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_gravity="bottom"
-    android:layout_marginTop="8dp"
-    android:scaleType="centerInside"
-    android:background="#00ffffff"
-    android:src="@mipmap/ic_minus"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/ingredient_name"
-    android:layout_marginRight="8dp"
-    app:layout_constraintRight_toRightOf="parent" />
+        android:id="@+id/ib_remove"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#00ffffff"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/baseline_remove_circle_outline_black_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

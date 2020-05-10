@@ -97,20 +97,16 @@ public class MainActivity extends AppCompatActivity {
                 InitializeFragments(frigoFragment);
                 return true;
             case R.id.navigation_Liste:
-
                 //InitializeFragments(listFragment);
                 startActivity(new Intent(getApplicationContext(), ListActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Menu:
                 InitializeFragments(menuFragment);
                 return true;
             case R.id.navigation_Recette:
-                Log.d("prout", "test 1 ");
-                Intent RecetteIntent = new Intent(getApplicationContext(), RecetteActivity.class);
-                RecetteIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(RecetteIntent);
-
-                Log.d("prout", "test 2 ");
+                startActivity(new Intent(getApplicationContext(), RecetteActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Settings:
                 InitializeFragments(settingsFragment);
