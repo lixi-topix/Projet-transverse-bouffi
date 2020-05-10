@@ -2,8 +2,6 @@ package com.example.Bon_Appit_eat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,41 +81,23 @@ public class Listadapter_course extends BaseAdapter{
 
                 }
             });
-            listViewHolder.editTextQuantity.addTextChangedListener(new TextWatcher() {
+
+            listViewHolder.editTextQuantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    String editTextChanged = listViewHolder.editTextQuantity.getText().toString();
-                    editTextapply(position, listViewHolder.editTextQuantity,editTextChanged);
-                }
-
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus){
+                        final EditText Caption = (EditText) v;
+                        listelement.get(position).setCartQuantity(Integer.parseInt(Caption.getText().toString()));
+                    }
                 }
             });
 
             return row;
         }
 
-        private void editTextapply(int position, EditText edTextQuantity , String Qty) {
-            Listcourse_Element listcourse_element = getItem(position);
-            System.out.println("position :"+position+" edQuantity"+ edTextQuantity +"#########"+Qty);
-           if (Integer.parseInt(String.valueOf(Qty)) > 0){
-                listcourse_element.CartQuantity = Integer.parseInt(String.valueOf(Qty));
-                //edTextQuantity.setText(listcourse_element.CartQuantity+"");
-            }
-           edTextQuantity.setText(Qty);
 
-        }
 
         private void updateQuantity(int position, EditText edTextQuantity, int value) {
-
             Listcourse_Element listcourse_element = getItem(position);
             if(value > 0)
             {

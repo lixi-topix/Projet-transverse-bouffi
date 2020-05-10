@@ -14,5 +14,7 @@ public class Listcourse_Element {
             this.CartQuantity = CartQantity;
         }
 
-
+    public void setCartQuantity(int cartQuantity) {
+        CartQuantity = cartQuantity;
+    }
 }
