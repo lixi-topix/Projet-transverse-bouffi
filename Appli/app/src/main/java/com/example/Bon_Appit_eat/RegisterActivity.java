@@ -16,29 +16,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class RegisterActivity extends RootActivity {
 
+    private static final int GALLERY_INTENT = 1;
     private EditText mFirstName, mLastName, mEmail, mPassword, mConfirmPassword;
     private Button mRegisterButton;
     private TextView mLoginButton;
@@ -47,8 +43,6 @@ public class RegisterActivity extends RootActivity {
     private StorageReference mStorage;
     private ProgressDialog mProgressDialog;
     private Uri mResultUri;
-
-    private static final int GALLERY_INTENT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,19 +89,19 @@ public class RegisterActivity extends RootActivity {
                 String password = mPassword.getText().toString().trim();
                 String confirmPassword = mConfirmPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
                 } else if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
-                }  else if (password.length() < 6) {
+                } else if (password.length() < 6) {
                     mPassword.setError("Password must have at least 6 characters");
-                } else if(!password.equals(confirmPassword)) {
+                } else if (!password.equals(confirmPassword)) {
                     mConfirmPassword.setError("You must enter the same passwords");
                 } else {
                     mProgressDialog.setMessage("Creating Account...");
                     mProgressDialog.show();
 
-                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -116,7 +110,7 @@ public class RegisterActivity extends RootActivity {
                                 databaseUser.child("firstName").setValue(firstName);
                                 databaseUser.child("lastName").setValue(lastName);
 
-                                uploadProfilePic(databaseUser, mStorage.child("ProfilePictures").child(mAuth.getCurrentUser().getUid()));
+                                uploadProfilePic(mStorage.child("ProfilePictures").child(mAuth.getCurrentUser().getUid()));
 
 
                                 mProgressDialog.dismiss();
@@ -178,7 +172,7 @@ public class RegisterActivity extends RootActivity {
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
-    private void uploadProfilePic(final DatabaseReference databaseUser, final StorageReference ref) {
+    private void uploadProfilePic(final StorageReference ref) {
         if (mResultUri != null) {
             ref.putFile(mResultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override

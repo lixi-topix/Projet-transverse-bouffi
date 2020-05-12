@@ -7,15 +7,18 @@ public class Ingredient {
     private String Name;
     private String Type;
 
-    Ingredient(){
+    Ingredient() {
 
     }
+
     public Ingredient(String name, String type) {
         this.Name = name;
         this.Type = type;
     }
 
-    public String getName() { return Name; }
+    public String getName() {
+        return Name;
+    }
 
     public void setName(String name) {
         Name = name;

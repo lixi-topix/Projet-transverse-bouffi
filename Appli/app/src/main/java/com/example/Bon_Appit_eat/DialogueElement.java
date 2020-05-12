@@ -11,8 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import java.util.Objects;
 
 public class DialogueElement extends AppCompatDialogFragment implements AdapterView.OnItemSelectedListener {
     private EditText edit_textNameElement;
@@ -21,12 +24,13 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
     private Spinner spinner;
     private String text_spinner;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_dialog , null);
+        View view = inflater.inflate(R.layout.layout_dialog, null);
         //view has the layout we build
 
         builder.setView(view)
@@ -43,24 +47,24 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
                         String Name_new_element = edit_textNameElement.getText().toString();
                         String Quantity_new_element = edit_textQuantityElement.getText().toString();
                         //ajouter choix spinner
-                        listener.Creation_new_element(Name_new_element,Quantity_new_element,text_spinner);
+                        listener.Creation_new_element(Name_new_element, Quantity_new_element, text_spinner);
                     }
                 });
         edit_textNameElement = view.findViewById(R.id.edit_name_element);
         edit_textQuantityElement = view.findViewById(R.id.edit_quantity_element);
         spinner = view.findViewById(R.id.edit_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( getActivity() ,  R.array.choose_your_quantity, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.choose_your_quantity, android.R.layout.simple_spinner_item);
         String[] list = getResources().getStringArray(R.array.choose_your_quantity);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
 
-        return  builder.create();
+        return builder.create();
     }
 
-//context = "activity"
+    //context = "activity"
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             listener = (DialogueElementListener) context;
@@ -80,9 +84,9 @@ public class DialogueElement extends AppCompatDialogFragment implements AdapterV
 
     }
 
-    public interface DialogueElementListener{
+    public interface DialogueElementListener {
         //void  applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier );
-        void Creation_new_element(String Name_new_element, String Quantity_new_element, String Quantity_qualifier );
+        void Creation_new_element(String Name_new_element, String Quantity_new_element, String Quantity_qualifier);
     }
 
 }

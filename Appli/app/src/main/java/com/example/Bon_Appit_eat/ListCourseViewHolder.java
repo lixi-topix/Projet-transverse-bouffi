@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class ListCourseViewHolder {
 
-    ImageView img_ingredient ;
+    ImageView img_ingredient;
     TextView ingredient_name;
     TextView ingredient_qty;
     ImageButton ib_addnew;

@@ -2,21 +2,16 @@ package com.example.Bon_Appit_eat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends RootActivity {
 
@@ -31,8 +26,7 @@ public class MainActivity extends RootActivity {
     private TextView textViewQuantityElement;
     private TextView textViewQtySpinner;
     private FloatingActionButton addButton;
-    //later unit by menu
-
+    //later unit by menu_main
 
 
     //
@@ -66,29 +60,16 @@ public class MainActivity extends RootActivity {
         updateUIConnected(null);
     }
 
-    // open our dialog box
-    public void openDialog(){
-        DialogueElement dialogueElement = new DialogueElement();
-        dialogueElement.show(getSupportFragmentManager(), "element dialog");
-    }
-
-    //@Override
-    public void applyTexts(String Name_new_element, String Quantity_new_element, String Quantity_qualifier) {
-        textViewNameElement.setText(Name_new_element);
-        textViewQuantityElement.setText(Quantity_new_element);
-        textViewQtySpinner.setText(Quantity_qualifier);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.navigation_Frigo:
                 InitializeFragments(frigoFragment);
                 return true;
@@ -114,6 +95,10 @@ public class MainActivity extends RootActivity {
                 updateUIConnected(new Intent(getApplicationContext(), TestActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
+            case R.id.profileActivity:
+                updateUIConnected(new Intent(getApplicationContext(), ProfileActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             case R.id.logout:
                 mAuth.signOut();
                 updateUIConnected(null);
@@ -124,7 +109,7 @@ public class MainActivity extends RootActivity {
         }
     }
 
-    private void InitializeFragments(Fragment fragment){
+    private void InitializeFragments(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit(); // save changes

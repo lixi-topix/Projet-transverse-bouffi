@@ -24,13 +24,14 @@ import java.util.Objects;
 
 public class ListFragment extends Fragment {
 
+    Ingredient ingredient;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private DatabaseReference ingredientReference;
-    public ListFragment(){
+
+    public ListFragment() {
         //required empty public constructor
     }
-    Ingredient ingredient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +41,7 @@ public class ListFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
-        final ListView listView = (ListView) view.findViewById(R.id.list_course_view);
+        final ListView listView = view.findViewById(R.id.list_course_view);
         final ArrayList<Ingredient> list_ingredient = new ArrayList<>();
         final ArrayList<String> list_nameIngredient = new ArrayList<>();
         //make request to the ddb and add it to the arraylist and concatenate with quantity
@@ -59,7 +60,7 @@ public class ListFragment extends Fragment {
         ingredientReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     ingredient = ds.getValue(Ingredient.class);
                     list_ingredient.add(ingredient);
@@ -73,8 +74,6 @@ public class ListFragment extends Fragment {
 
             }
         });
-
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

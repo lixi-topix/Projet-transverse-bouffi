@@ -1,11 +1,9 @@
 package com.example.Bon_Appit_eat;
 
 import android.os.Bundle;
-import android.service.autofill.OnClickAction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 

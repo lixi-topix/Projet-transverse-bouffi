@@ -25,7 +25,8 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/BonAppetEat.LoginRegister" />
-        <activity android:name=".RecetteActivity" />
+        <activity
+            android:name=".RecetteActivity" />
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/BonAppetEat.LoginRegister" />

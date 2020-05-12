@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,7 +35,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     private TextView mIngredient;
     private ArrayList<String> ingredientIDList;
 
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +54,6 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
                 openDialog();
             }
         });
-
-
 
 
         //METTRE IMAGE ICI
@@ -89,26 +85,23 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     }
 
 
-
-
-    private View addIngredient(){
+    private View addIngredient() {
         newIngredient = findViewById(R.id.gridingrédient);
 
-        if(newIngredient.getParent() != null) {
+        if (newIngredient.getParent() != null) {
             ((ViewGroup) newIngredient.getParent()).removeView(newIngredient); // <- fix
         }
 
 
-
         View button = newIngredient.getChildAt(2);
-        if (ll.getChildCount()==2) {
+        if (ll.getChildCount() == 2) {
             Log.d(TAG, "DANS LE IF ");
             newIngredient.removeViewAt(0);
             newIngredient.removeViewAt(0);
             newIngredient.removeViewAt(0);
-            button =newIngredient.getChildAt(0);
-        }else{
-            button=newIngredient.getChildAt(3);
+            button = newIngredient.getChildAt(0);
+        } else {
+            button = newIngredient.getChildAt(3);
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -116,12 +109,12 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
             public void onClick(View v) {
                 AddToRecetteDialogue addToRecetteDialogue = new AddToRecetteDialogue();
                 addToRecetteDialogue.show(getSupportFragmentManager(), "element dialog");
-                if (newIngredient.getChildCount()==1) {
+                if (newIngredient.getChildCount() == 1) {
                     newIngredient.removeViewAt(0);
                 } else {
                     newIngredient.removeViewAt(3);
                 }
-                ll.addView(addIngredient(), ll.getChildCount()-2);
+                ll.addView(addIngredient(), ll.getChildCount() - 2);
                 setContentView(sv);
             }
         });
