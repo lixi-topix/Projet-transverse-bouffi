@@ -61,7 +61,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
 
 
 
-        //METTRE IMAGE ICI
+        //TODO METTRE IMAGE ICI
 
 /*
 
