@@ -8,9 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends RootActivity {
@@ -28,8 +32,8 @@ public class MainActivity extends RootActivity {
     private FloatingActionButton addButton;
     //later unit by menu_main
 
+    private RecyclerView mRecipeList;
 
-    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,13 @@ public class MainActivity extends RootActivity {
         menuFragment = new MenuFragment();
         ingredientFragment = new IngredientFragment();
         settingsFragment = new SettingsFragment();
+
+
+        mRecipeList = findViewById(R.id.recipe_list);
         addButton = findViewById(R.id.fab);
+
+        mRecipeList.setHasFixedSize(true);
+        mRecipeList.setLayoutManager(new LinearLayoutManager(this));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +67,29 @@ public class MainActivity extends RootActivity {
     protected void onStart() {
         super.onStart();
 
+        FirebaseRecyclerAdapter<Recipe, >
+
         updateUIConnected(null);
+    }
+
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+
+        public RecipeViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            mView = itemView;
+        }
+
+        public void setName(String name) {
+            TextView recipeName = mView.findViewById(R.id.recipe_name);
+            recipeName.setText(name);
+        }
+
+        public void setDesc(String desc) {
+            TextView recipeDesc = mView.findViewById(R.id.recipe_desc);
+            recipeDesc.setText(desc);
+        }
     }
 
     @Override
@@ -71,7 +103,7 @@ public class MainActivity extends RootActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.navigation_Frigo:
-                InitializeFragments(frigoFragment);
+                //InitializeFragments(frigoFragment);
                 return true;
             case R.id.navigation_Liste:
                 //InitializeFragments(listFragment);
@@ -79,17 +111,17 @@ public class MainActivity extends RootActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Menu:
-                InitializeFragments(menuFragment);
+                //InitializeFragments(menuFragment);
                 return true;
             case R.id.navigation_Recette:
                 updateUIConnected(new Intent(getApplicationContext(), RecetteActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Settings:
-                InitializeFragments(settingsFragment);
+                //InitializeFragments(settingsFragment);
                 return true;
             case R.id.navigation_ajouterIngrédient:
-                InitializeFragments(ingredientFragment);
+                //InitializeFragments(ingredientFragment);
                 return true;
             case R.id.test:
                 updateUIConnected(new Intent(getApplicationContext(), TestActivity.class));
@@ -107,11 +139,5 @@ public class MainActivity extends RootActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void InitializeFragments(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit(); // save changes
     }
 }
