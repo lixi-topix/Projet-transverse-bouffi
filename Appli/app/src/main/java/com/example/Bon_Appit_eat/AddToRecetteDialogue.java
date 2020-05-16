@@ -28,6 +28,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
     private AddIngredientListener listener;
     private DatabaseReference mDatabase;
     private List<String> mListIngredient;
+    private List<String> mListIdIngredient;
 
 
     @NonNull
@@ -35,6 +36,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Ingredient");
         mListIngredient = new ArrayList<>();
+        mListIdIngredient = new ArrayList<>();
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -45,7 +47,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
                     Ingredient ingredient = ds.getValue(Ingredient.class);
                     assert ingredient != null;
                     mListIngredient.add(ingredient.getName());
-                    System.out.println(ingredient);
+                    mListIdIngredient.add(ds.getKey());
                 }
             }
 
@@ -77,7 +79,8 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String ingredient = textView.getText().toString().trim();
-                   //     listener.applyText(ingredient);
+                        String id = mListIdIngredient.get(mListIngredient.indexOf(ingredient));
+                        //listener.applyText(id);
                     }
                 });
 

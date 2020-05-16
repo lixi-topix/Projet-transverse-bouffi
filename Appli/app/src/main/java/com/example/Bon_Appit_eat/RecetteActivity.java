@@ -31,6 +31,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     private EditText rDescription;
     private Button rPost;
     private ArrayList<String> ingredientIDList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
