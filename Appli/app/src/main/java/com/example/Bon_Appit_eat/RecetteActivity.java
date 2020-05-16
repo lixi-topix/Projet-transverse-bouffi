@@ -1,5 +1,6 @@
 package com.example.Bon_Appit_eat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,10 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     private EditText rDescription;
     private Button rPost;
     private ArrayList<String> ingredientIDList;
+    private ArrayList<String> ingredientQuantity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,13 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
+        ingredientIDList = new ArrayList<>();
+        ingredientQuantity = new ArrayList<>();
         sv = new ScrollView(this);
         ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
         sv.addView(ll);
         setContentView(sv);
-
-
-
-
 
         TextView tv = new TextView(this);
         tv.setText("We are already thrilled by your new recipe!");
@@ -96,6 +98,29 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
         ll.addView(rPost);
         setContentView(sv);
 
+        rPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Recettes recettesPost = new Recettes();
+                EditText tempText= (EditText) ll.getChildAt(1);
+                recettesPost.setName(tempText.getText().toString().trim());
+                tempText= (EditText) ll.getChildAt(ll.getChildCount()-2);
+                recettesPost.setDescription(tempText.getText().toString().trim());
+                for (int i=3; i<ll.getChildCount()-2;i++){
+                    Log.d(TAG, "i="+i);
+                    GridLayout tempG = (GridLayout)ll.getChildAt(i);
+                    tempText =(EditText) tempG.getChildAt(1);
+                    ingredientQuantity.add(tempText.getText().toString().trim());
+                }
+                recettesPost.setIngredientQuantity(ingredientQuantity);
+                recettesPost.setIngredient(ingredientIDList);
+                DatabaseReference newPost= FirebaseDatabase.getInstance().getReference().child("Receipes");
+                String id = newPost.push().getKey();
+                newPost.child(id).setValue(recettesPost);
+                updateUIConnected(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
     }
 
 
@@ -139,5 +164,23 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     @Override
     public void applyText(String ingredientID) {
         ingredientIDList.add(ingredientID);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Ingredient").child(ingredientID);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Ingredient tempIng = dataSnapshot.getValue(Ingredient.class);
+                GridLayout temporary = (GridLayout)ll.getChildAt(ll.getChildCount()-3);
+                TextView text = (TextView)temporary.getChildAt(0);
+                text.setText(tempIng.getName());
+                text = (TextView)temporary.getChildAt(2);
+                text.setText(tempIng.getType());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

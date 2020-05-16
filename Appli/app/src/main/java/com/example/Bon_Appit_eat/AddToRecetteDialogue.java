@@ -80,7 +80,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String ingredient = textView.getText().toString().trim();
                         String id = mListIdIngredient.get(mListIngredient.indexOf(ingredient));
-                        //listener.applyText(id);
+                        listener.applyText(id);
                     }
                 });
 
