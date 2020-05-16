@@ -77,7 +77,7 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String ingredient = textView.getText().toString().trim();
-                        listener.applyText(ingredient);
+                   //     listener.applyText(ingredient);
                     }
                 });
 
@@ -99,10 +99,8 @@ public class AddToRecetteDialogue extends AppCompatDialogFragment {
     }
 
     public interface AddIngredientListener {
-        void applyText(String ingredient);
+        void applyText(String ingredientID);
     }
 
-    public interface addToRecetteListener {
-        void getIngredientId(String ingredientID);
-    }
+
 }
