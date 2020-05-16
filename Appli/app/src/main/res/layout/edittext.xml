@@ -1,68 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <GridLayout
         android:id="@+id/gridingrédient"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/ingrédientRecette"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:text="TEST"
+            android:layout_width="193dp"
+            android:layout_height="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_row="0"
-            android:layout_column="0"
-            android:layout_gravity="left"
-            android:hint="Ingredient"
-            android:inputType="text"
-            android:textSize="18sp" />
+            android:layout_column="0"/>
 
-        <TextView
+        <EditText
             android:id="@+id/ingrédientquantityRecette"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_gravity="right"
+            android:layout_width="140dp"
+            android:layout_height="45dp"
             android:hint="Quantité"
             android:inputType="text"
-            android:textSize="18sp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_row="0"
+            android:layout_column="1"
+            />
 
+        <TextView
+            android:id="@+id/ingrédientType"
+            android:layout_width="76dp"
+            android:layout_height="45dp"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:hint="Ingredient"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/btningrédientPlus"
+            android:layout_width="186dp"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="add another ingredient" />
 
     </GridLayout>
 
-    <Button
-        android:id="@+id/btningrédientPlus"
-        android:layout_width="186dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="add another ingredient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridingrédient" />
+    <EditText
+        android:id="@+id/descriptionsRecette"
+        android:layout_width="410dp"
+        android:layout_height="252dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="La recette dans les moindres détails"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/btnPostRecette"
 
         android:layout_width="133dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="150dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
         android:text="Post"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
