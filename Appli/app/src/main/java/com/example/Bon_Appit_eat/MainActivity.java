@@ -2,20 +2,30 @@ package com.example.Bon_Appit_eat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.Objects;
 
 public class MainActivity extends RootActivity {
 
@@ -33,6 +43,8 @@ public class MainActivity extends RootActivity {
     //later unit by menu_main
 
     private RecyclerView mRecipeList;
+    private DatabaseReference mDatabase;
+    private FirebaseRecyclerAdapter adapter;
 
 
     @Override
@@ -50,9 +62,11 @@ public class MainActivity extends RootActivity {
 
         mRecipeList = findViewById(R.id.recipe_list);
         addButton = findViewById(R.id.fab);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Receipes");
 
         mRecipeList.setHasFixedSize(true);
         mRecipeList.setLayoutManager(new LinearLayoutManager(this));
+        fetch();
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,28 +80,70 @@ public class MainActivity extends RootActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseRecyclerAdapter<Recipe, >
-
+        adapter.startListening();
         updateUIConnected(null);
     }
 
+    private void fetch() {
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Receipes");
+
+        FirebaseRecyclerOptions<Recettes> options = new FirebaseRecyclerOptions.Builder<Recettes>()
+                        .setQuery(query, new SnapshotParser<Recettes>() {
+                            @NonNull
+                            @Override
+                            public Recettes parseSnapshot(@NonNull DataSnapshot snapshot) {
+                                return Objects.requireNonNull(snapshot.getValue(Recettes.class));
+                            }
+                        })
+                        .build();
+
+        adapter = new FirebaseRecyclerAdapter<Recettes, RecipeViewHolder>(options) {
+            @NonNull
+            @Override
+            public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.recipe_row, parent, false);
+
+                return new RecipeViewHolder(view);
+            }
+
+
+            @Override
+            protected void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position, @NonNull Recettes model) {
+                holder.setName(model.getName());
+                holder.setDesc(model.getDescription());
+
+                holder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(MainActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+        };
+        mRecipeList.setAdapter(adapter);
+    }
+
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-        View mView;
+        public LinearLayout root;
+        public TextView recipeName;
+        public TextView recipeDesc;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            mView = itemView;
+            root = itemView.findViewById(R.id.recipe_linear);
+            recipeName = itemView.findViewById(R.id.recipe_name);
+            recipeDesc = itemView.findViewById(R.id.recipe_desc);
         }
 
         public void setName(String name) {
-            TextView recipeName = mView.findViewById(R.id.recipe_name);
             recipeName.setText(name);
         }
 
         public void setDesc(String desc) {
-            TextView recipeDesc = mView.findViewById(R.id.recipe_desc);
             recipeDesc.setText(desc);
         }
     }
