@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 
-public class RecetteActivity extends AppCompatActivity implements AddToRecetteDialogue.addToRecetteListener {
+public class RecetteActivity extends RootActivity implements AddToRecetteDialogue.AddIngredientListener {
 
     private View button;
     private DatabaseReference mDatabase;
@@ -136,7 +136,7 @@ public class RecetteActivity extends AppCompatActivity implements AddToRecetteDi
     }
 
     @Override
-    public void getIngredientId(String ingredientID) {
+    public void applyText(String ingredientID) {
         ingredientIDList.add(ingredientID);
     }
 }
