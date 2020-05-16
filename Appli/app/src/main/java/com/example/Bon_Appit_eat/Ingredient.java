@@ -7,7 +7,7 @@ public class Ingredient {
     private String Name;
     private String Type;
 
-    Ingredient() {
+    public Ingredient() {
 
     }
 

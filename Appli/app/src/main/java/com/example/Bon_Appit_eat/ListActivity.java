@@ -18,6 +18,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
     Button PushToFrigo;
     Button AddNewListElement;
     ArrayList<Listcourse_Element> productBuy = new ArrayList<>();
+    ArrayList<Listcourse_Element> productBuyclone = new ArrayList<>();
     private ListView listView;
     private ListAdapter listAdapter;
     private DatabaseReference databaseReference;
@@ -46,10 +47,11 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
             }
         });
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        //gérer l'écriture dans l'edit text
+
     }
 
     private void PushToFrigo() {
+
         //gérer la duplication et le cumule des aliments.
         //FrigoIngredient = FirebaseDatabase.getInstance().getReference("Frigo/"+mAuth.getCurrentUser().getUid()+"Ingredient");
         productBuy.clear();
@@ -61,17 +63,51 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                         , listcourse_Element.get(i).Ingredient_img
                         , listcourse_Element.get(i).CartQuantity
                 );
-                ingredients.CartQuantity = listcourse_Element.get(i).CartQuantity;
-                productBuy.add(ingredients);
+
+                if(0 != productBuy.size()){
+                    int sum =  ingredients.CartQuantity;
+                    boolean check = false;
+                    for (Listcourse_Element element:
+                            productBuy) {
+                        if(element.Ingredient_name.equals(ingredients.Ingredient_name) ){
+                            sum = sum +element.CartQuantity;
+                            check = true;
+                            element.setCartQuantity(sum);
+                        }
+
+                    }
+                    // s'il n'existe pas déjà
+                    if(!check){
+                        ingredients.CartQuantity = listcourse_Element.get(i).CartQuantity;
+                        productBuy.add(ingredients);
+                    }
+                }else {
+                    productBuy.add(ingredients);
+                }
+
+
+            }
+            for (Listcourse_Element element:
+                 productBuy) {
                 databaseReference
                         .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                         .child("Frigo")
-                        .child(ingredients.Ingredient_name)
-                        .setValue(ingredients.CartQuantity);
+                        .child(element.Ingredient_name)
+                        .setValue(element.CartQuantity);
+
             }
         }
+        
+
+
+
 
     }
+
+
+
+
+
 
     public void setallTheNeededElement() {
         //TODO:  requete dans les recettes et selections des plats
