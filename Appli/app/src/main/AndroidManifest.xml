@@ -35,6 +35,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".TestActivity" />
         <activity android:name=".ListActivity" />
+        <activity android:name=".FrigoActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

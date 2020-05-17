@@ -160,6 +160,8 @@ public class MainActivity extends RootActivity {
         switch (item.getItemId()) {
             case R.id.navigation_Frigo:
                 //InitializeFragments(frigoFragment);
+                updateUIConnected(new Intent(getApplicationContext(), FrigoActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return true;
             case R.id.navigation_Liste:
                 //InitializeFragments(listFragment);

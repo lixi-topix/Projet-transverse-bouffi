@@ -1,6 +1,5 @@
 package com.example.Bon_Appit_eat;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ListActivity extends RootActivity implements DialogueElement.DialogueElementListener {
+public class FrigoActivity extends RootActivity implements DialogueElement.DialogueElementListener {
 
     ArrayList<Listcourse_Element> listcourse_Element = new ArrayList<>();
     Button PushToFrigo;
@@ -35,24 +35,27 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
     DatabaseReference r2Database;
     List<String> mListIngredient;
     List<String> mListIdIngredient;
-    List<String> rListQtyIngredient;
+    List<Long> rListQtyIngredient;
     List<String> rListIdIngredient;
     List<String> mListTypeIngredient;
     List<String> rlistID ;
     Context context = this;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setallTheNeededElement();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_listviewcourse);
+        setContentView(R.layout.activity_frigo);
         listView = findViewById(R.id.customListView);
         listAdapter = new Listadapter_course(this, listcourse_Element);
         listView.setAdapter(listAdapter);
-        PushToFrigo = findViewById(R.id.PushToFrigo);
+        PushToFrigo = findViewById(R.id.updateFrigo);
         PushToFrigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PushToFrigo();
+
             }
         });
         AddNewListElement = findViewById(R.id.AddNewListElement);
@@ -69,7 +72,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
     private void PushToFrigo() {
 
         //gérer la duplication et le cumule des aliments.
-        //FrigoIngredient = FirebaseDatabase.getInstance().getReference("Frigo/"+mAuth.getCurrentUser().getUid()+"Ingredient");
+
         productBuy.clear();
         for (int i = 0; i < listcourse_Element.size(); i++) {
             if (listcourse_Element.get(i).CartQuantity > 0) {
@@ -103,16 +106,33 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                 }
 
             }
-            for (Listcourse_Element element:
-                 productBuy) {
 
-                databaseReference
-                        .child("Frigo")
-                        .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
-                        .child(element.ID_ingrédient)
-                        .setValue(element.CartQuantity);
+
+        }
+        for (Listcourse_Element element:
+                productBuy) {
+            for(int j = 0 ; j<rListQtyIngredient.size() ;j++ ){
+                if(element.ID_ingrédient.equals(rlistID.get(j))){
+                    if((rListQtyIngredient.get(j) - element.CartQuantity) <= 0 ){
+                        System.out.println(listcourse_Element);
+                        listcourse_Element.remove(element);
+                        System.out.println(listcourse_Element);
+                        databaseReference
+                                .child("Frigo")
+                                .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
+                                .child(element.ID_ingrédient)
+                                .setValue(0);
+                    }else {
+                        databaseReference
+                                .child("Frigo")
+                                .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
+                                .child(element.ID_ingrédient)
+                                .setValue(rListQtyIngredient.get(j) - element.CartQuantity);
+                    }
+                }
 
             }
+
         }
 
     }
@@ -131,7 +151,6 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                     Ingredient ingredient = ds.getValue(Ingredient.class);
                     assert ingredient != null;
                     mListIngredient.add(ingredient.getName());
@@ -145,73 +164,33 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
             }
         });
-
-        rDatabase = FirebaseDatabase.getInstance().getReference().child("Receipes");
+        mAuth = FirebaseAuth.getInstance();
+        rDatabase = FirebaseDatabase.getInstance().getReference().child("Frigo").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         rListQtyIngredient = new ArrayList<>();
-        rListIdIngredient = new ArrayList<>();
         rlistID = new ArrayList<>();
 
         rDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rlistID.clear();
+                rListQtyIngredient.clear();
+                listcourse_Element.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     rlistID.add(ds.getKey());
-
+                    rListQtyIngredient.add((Long) ds.getValue());
                 }
 
-                for (String s:
-                        rlistID) {
-                    r2Database = FirebaseDatabase.getInstance().getReference().child("Receipes").child(s).child("ingredient");
-                    r2Database.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                                rListIdIngredient.add((String) ds.getValue());
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    r2Database = FirebaseDatabase.getInstance().getReference().child("Receipes").child(s).child("ingredientQuantity");
-                    r2Database.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                                rListQtyIngredient.add((String) ds.getValue());
-
-                            }
-
-                            for (int i = 0; i< rListIdIngredient.size(); i++) {
-                                for (int j = 0; j< mListIdIngredient.size(); j++) {
-                                    if( mListIdIngredient.get(j).equals(rListIdIngredient.get(i))){
-                                        System.out.println("here");
-                                        listcourse_Element.add(new Listcourse_Element( rListIdIngredient.get(i),mListIngredient.get(j),rListQtyIngredient.get(i)+mListTypeIngredient.get(j),0,0));
-                                    }
+                        for (int i = 0; i< rListQtyIngredient.size(); i++) {
+                            for (int j = 0; j< mListIdIngredient.size(); j++) {
+                                if( mListIdIngredient.get(j).equals(rlistID.get(i)) && rListQtyIngredient.get(i)>0){
+                                    listcourse_Element.add(new Listcourse_Element( rlistID.get(i),mListIngredient.get(j),rListQtyIngredient.get(i)+mListTypeIngredient.get(j),0,0));
                                 }
-
-
-                            }listAdapter = new Listadapter_course(context, listcourse_Element);
-                            listView.setAdapter(listAdapter);
+                            }
 
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    
-
-                }
-
-            }
+                        listAdapter = new Listadapter_course(context, listcourse_Element);
+                        listView.setAdapter(listAdapter);
+                    }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -219,7 +198,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
         });
 
-        //TODO:  requete dans les recettes et selections des plats
+
 
 
     }
@@ -243,5 +222,4 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
         }// else does not exist in the data base can't add it
 
     }
-
 }
