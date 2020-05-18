@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:padding="20dp">
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <TextView
-            android:textSize="25dp"
-            android:id="@+id/ReicipeDetailsName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Reicipe Name"
-            />
+            <TextView
+                android:id="@+id/RecipeDetailsName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Recipe Name"
+                android:textSize="25dp" />
 
-        <ImageView
-            android:id="@+id/ReceipeDetailImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/logo"
+            <ImageView
+                android:id="@+id/ReceipeDetailImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
 
-            />
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/add_btn" />
+
             <LinearLayout
                 android:id="@+id/Ingredient_Quantity_Type"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="175dp"
-                android:layout_height="wrap_content"
-                android:text="Ingredient"
-                android:textSize="25dp"
+                <TextView
+                    android:layout_width="175dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ingredient"
+                    android:textSize="25dp"
 
-                />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,6 +55,7 @@
                     android:textSize="25dp"
 
                     />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,26 +64,26 @@
                     android:textSize="25dp"
 
                     />
-            </LinearLayout>
+            <!-- </LinearLayout>
 
             <TextView
                 android:id="@+id/descriptionsRecette"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/gridingrédient"
-                android:minHeight="80sp"
-                android:isScrollContainer="true"
-
+                android:layout_marginTop="10dp"
                 android:ems="10"
+
                 android:gravity="start|top"
                 android:hint="La recette dans les moindres détails"
                 android:inputType="textMultiLine"
+                android:isScrollContainer="true"
                 android:scrollbars="vertical"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="20dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </LinearLayout> -->
 
 
     </ScrollView>

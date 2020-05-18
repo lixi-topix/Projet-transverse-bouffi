@@ -1,6 +1,7 @@
 package com.example.Bon_Appit_eat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -86,13 +87,16 @@ public class MainActivity extends RootActivity {
                 final String key = getRef(position).getKey();
 
                 holder.setName(model.getName());
-                holder.setDesc(model.getDescription());
+                holder.setDesc(model.getDescription().substring(0, 100) + "...");
                 holder.setImage(getApplicationContext(), key);
 
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, FirebaseStorage.getInstance().getReference().child("Recipes").child(key).toString(), Toast.LENGTH_LONG).show();
+                        Intent detailRecipe = new Intent(MainActivity.this, DetailsRecetteActivity.class);
+                        detailRecipe.putExtra("recipe_key", key);
+                        updateUIConnected(detailRecipe);
+                        //Toast.makeText(MainActivity.this, FirebaseStorage.getInstance().getReference().child("Recipes").child(key).toString(), Toast.LENGTH_LONG).show();
                     }
                 });
             }

@@ -37,6 +37,7 @@
         <activity android:name=".ListActivity" />
         <activity android:name=".FrigoActivity"/>
         <activity android:name=".AddIngredientActivity" />
+        <activity android:name=".DetailsRecetteActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"
