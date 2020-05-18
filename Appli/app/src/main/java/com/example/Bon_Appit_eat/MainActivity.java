@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -80,7 +79,7 @@ public class MainActivity extends RootActivity {
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -89,23 +88,23 @@ public class MainActivity extends RootActivity {
         mRecipeList.setAdapter(adapter);
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout root;
-        public TextView recipeName;
-        public TextView recipeDesc;
+    static class RecipeViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout root;
+        TextView recipeName;
+        TextView recipeDesc;
 
-        public RecipeViewHolder(@NonNull View itemView) {
+        RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             root = itemView.findViewById(R.id.recipe_linear);
             recipeName = itemView.findViewById(R.id.recipe_name);
             recipeDesc = itemView.findViewById(R.id.recipe_desc);
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             recipeName.setText(name);
         }
 
-        public void setDesc(String desc) {
+        void setDesc(String desc) {
             recipeDesc.setText(desc);
         }
     }

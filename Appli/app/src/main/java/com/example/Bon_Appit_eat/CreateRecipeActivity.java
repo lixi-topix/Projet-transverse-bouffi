@@ -40,7 +40,6 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_recipe);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -52,13 +51,16 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         sv.addView(ll);
         setContentView(sv);
 
+        TextView tv = new TextView(this);
+        tv.setText("We are already thrilled by your new recipe!");
+        ll.addView(tv);
 
         EditText et = new EditText(this);
         et.setHint("Name of the recipe");
         ll.addView(et);
 
 
-        //TODO METTRE IMAGE ICI
+        //METTRE IMAGE ICI
 
 /*
 
@@ -82,7 +84,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         ll.addView(addIngredient());
 
 
-
+        setContentView(R.layout.activity_create_recipe);
         rDescription = this.findViewById(R.id.descriptionsRecette);
         if (rDescription.getParent() != null) {
             ((ViewGroup) rDescription.getParent()).removeView(rDescription);
@@ -98,22 +100,22 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         rPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Recipe recipePost = new Recipe();
+                Recipe recettesPost = new Recipe();
                 EditText tempText = (EditText) ll.getChildAt(1);
-                recipePost.setName(tempText.getText().toString().trim());
+                recettesPost.setName(tempText.getText().toString().trim());
                 tempText = (EditText) ll.getChildAt(ll.getChildCount() - 2);
-                recipePost.setDescription(tempText.getText().toString().trim());
+                recettesPost.setDescription(tempText.getText().toString().trim());
                 for (int i = 3; i < ll.getChildCount() - 2; i++) {
                     Log.d(TAG, "i=" + i);
                     GridLayout tempG = (GridLayout) ll.getChildAt(i);
                     tempText = (EditText) tempG.getChildAt(1);
                     ingredientQuantity.add(tempText.getText().toString().trim());
                 }
-                recipePost.setIngredientQuantity(ingredientQuantity);
-                recipePost.setIngredient(ingredientIDList);
+                recettesPost.setIngredientQuantity(ingredientQuantity);
+                recettesPost.setIngredient(ingredientIDList);
                 DatabaseReference newPost = FirebaseDatabase.getInstance().getReference().child("Receipes");
                 String id = newPost.push().getKey();
-                newPost.child(id).setValue(recipePost);
+                newPost.child(id).setValue(recettesPost);
                 updateUIConnected(new Intent(getApplicationContext(), MainActivity.class));
             }
         });

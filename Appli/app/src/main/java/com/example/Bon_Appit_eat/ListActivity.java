@@ -22,42 +22,37 @@ import java.util.Objects;
 
 public class ListActivity extends RootActivity implements DialogueElement.DialogueElementListener {
 
-    ArrayList<Listcourse_Element> listcourse_Element = new ArrayList<>();
-    Button PushToFrigo;
-    Button AddNewListElement;
-    ArrayList<Listcourse_Element> productBuy = new ArrayList<>();
-    DatabaseReference mDatabase;
-    DatabaseReference rDatabase;
-    DatabaseReference r2Database;
-    List<String> mListIngredient;
-    List<String> mListIdIngredient;
-    List<String> rListQtyIngredient;
-    List<String> rListIdIngredient;
-    List<String> mListTypeIngredient;
-    List<String> rlistID;
-    Context context = this;
+    private ArrayList<Listcourse_Element> listcourse_Element = new ArrayList<>();
+    private ArrayList<Listcourse_Element> productBuy = new ArrayList<>();
+    private DatabaseReference r2Database;
+    private List<String> mListIngredient;
+    private List<String> mListIdIngredient;
+    private List<String> rListQtyIngredient;
+    private List<String> rListIdIngredient;
+    private List<String> mListTypeIngredient;
+    private List<String> rlistID;
+    private Context context = this;
     private ListView listView;
     private ListAdapter listAdapter;
     private DatabaseReference databaseReference;
-    private DatabaseReference FrigoIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setallTheNeededElement();
+        setAllTheNeededElements();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_listviewcourse);
         listView = findViewById(R.id.customListView);
         listAdapter = new Listadapter_course(this, listcourse_Element);
         listView.setAdapter(listAdapter);
-        PushToFrigo = findViewById(R.id.PushToFrigo);
-        PushToFrigo.setOnClickListener(new View.OnClickListener() {
+        Button pushToFrigo = findViewById(R.id.PushToFrigo);
+        pushToFrigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PushToFrigo();
             }
         });
-        AddNewListElement = findViewById(R.id.AddNewListElement);
-        AddNewListElement.setOnClickListener(new View.OnClickListener() {
+        Button addNewListElement = findViewById(R.id.AddNewListElement);
+        addNewListElement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
@@ -75,11 +70,11 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
         for (int i = 0; i < listcourse_Element.size(); i++) {
             if (listcourse_Element.get(i).CartQuantity > 0) {
                 Listcourse_Element ingredients = new Listcourse_Element(
-                        listcourse_Element.get(i).ID_ingrédient
-                        , listcourse_Element.get(i).Ingredient_name
-                        , listcourse_Element.get(i).Qty_needed
-                        , listcourse_Element.get(i).Ingredient_img
-                        , listcourse_Element.get(i).CartQuantity
+                        listcourse_Element.get(i).ID_ingrédient,
+                        listcourse_Element.get(i).Ingredient_name,
+                        listcourse_Element.get(i).Qty_needed,
+                        listcourse_Element.get(i).Ingredient_img,
+                        listcourse_Element.get(i).CartQuantity
                 );
 
                 if (0 != productBuy.size()) {
@@ -104,34 +99,28 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                 }
 
             }
-            for (Listcourse_Element element :
-                    productBuy) {
-
+            for (Listcourse_Element element : productBuy) {
                 databaseReference
                         .child("Frigo")
                         .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                         .child(element.ID_ingrédient)
                         .setValue(element.CartQuantity);
-
             }
         }
 
     }
 
 
-    public void setallTheNeededElement() {
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Ingredient");
+    public void setAllTheNeededElements() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Ingredient");
         mListIngredient = new ArrayList<>();
         mListIdIngredient = new ArrayList<>();
         mListTypeIngredient = new ArrayList<>();
-
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                     Ingredient ingredient = ds.getValue(Ingredient.class);
                     assert ingredient != null;
                     mListIngredient.add(ingredient.getName());
@@ -146,7 +135,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
             }
         });
 
-        rDatabase = FirebaseDatabase.getInstance().getReference().child("Receipes");
+        DatabaseReference rDatabase = FirebaseDatabase.getInstance().getReference().child("Receipes");
         rListQtyIngredient = new ArrayList<>();
         rListIdIngredient = new ArrayList<>();
         rlistID = new ArrayList<>();
@@ -166,9 +155,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                                 rListIdIngredient.add((String) ds.getValue());
-
                             }
                         }
 
@@ -183,9 +170,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                                 rListQtyIngredient.add((String) ds.getValue());
-
                             }
 
                             for (int i = 0; i < rListIdIngredient.size(); i++) {
@@ -195,12 +180,9 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                                         listcourse_Element.add(new Listcourse_Element(rListIdIngredient.get(i), mListIngredient.get(j), rListQtyIngredient.get(i) + mListTypeIngredient.get(j), 0, 0));
                                     }
                                 }
-
-
                             }
                             listAdapter = new Listadapter_course(context, listcourse_Element);
                             listView.setAdapter(listAdapter);
-
                         }
 
                         @Override
@@ -208,10 +190,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
                         }
                     });
-
-
                 }
-
             }
 
             @Override
@@ -234,9 +213,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
 
     public void Creation_new_element(String Name_new_element, String Quantity_new_element, String Quantity_qualifier) {
-
         for (int i = 0; i < mListIngredient.size(); i++) {
-
             if (mListIngredient.get(i).equals(Name_new_element)) {
                 listcourse_Element.add(new Listcourse_Element(mListIdIngredient.get(i), Name_new_element, Quantity_new_element + "" + Quantity_qualifier, 1, 0));
                 listAdapter = new Listadapter_course(this, listcourse_Element);
