@@ -56,6 +56,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
     private static final int GALLERY_INTENT = 1;
     private ImageButton imageButton;
     private Uri mResultUri;
+    private Uri mDownloadUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,11 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         rPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference newPost = FirebaseDatabase.getInstance().getReference().child("Receipes");
+                String id = newPost.push().getKey();
+
+                uploadImage(FirebaseStorage.getInstance().getReference().child("Recipes").child(id));
+
                 Recipe recettesPost = new Recipe();
                 EditText tempText = (EditText) ll.getChildAt(1);
                 recettesPost.setName(tempText.getText().toString().trim());
@@ -130,11 +136,12 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 }
                 recettesPost.setIngredientQuantity(ingredientQuantity);
                 recettesPost.setIngredient(ingredientIDList);
-                DatabaseReference newPost = FirebaseDatabase.getInstance().getReference().child("Receipes");
-                String id = newPost.push().getKey();
+                recettesPost.setUrl(mDownloadUri.toString().trim());
+
+
                 newPost.child(id).setValue(recettesPost);
 
-                uploadImage(FirebaseStorage.getInstance().getReference().child("Recipes").child(id));
+
 
                 updateUIConnected(new Intent(getApplicationContext(), MainActivity.class));
             }
@@ -156,7 +163,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
+                        mDownloadUri = task.getResult();
                     }
                 }
             });
@@ -178,7 +185,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
+                        mDownloadUri = task.getResult();
                     }
                 }
             });

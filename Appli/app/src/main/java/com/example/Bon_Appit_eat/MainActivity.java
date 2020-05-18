@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -75,6 +77,7 @@ public class MainActivity extends RootActivity {
             protected void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position, @NonNull Recipe model) {
                 holder.setName(model.getName());
                 holder.setDesc(model.getDescription());
+                holder.setImage(model.getUrl());
 
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -92,12 +95,14 @@ public class MainActivity extends RootActivity {
         LinearLayout root;
         TextView recipeName;
         TextView recipeDesc;
+        ImageView recipeImage;
 
         RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             root = itemView.findViewById(R.id.recipe_linear);
             recipeName = itemView.findViewById(R.id.recipe_name);
             recipeDesc = itemView.findViewById(R.id.recipe_desc);
+            recipeImage = itemView.findViewById(R.id.recipe_image);
         }
 
         void setName(String name) {
@@ -106,6 +111,10 @@ public class MainActivity extends RootActivity {
 
         void setDesc(String desc) {
             recipeDesc.setText(desc);
+        }
+
+        void setImage(String image) {
+            Picasso.get().load(image).into(recipeImage);
         }
     }
 }

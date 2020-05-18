@@ -6,6 +6,7 @@ public class Recipe {
 
     private String Name;
     private String Description;
+    private String Url;
     private List<String> Ingredient;
     private List<String> IngredientQuantity;
 
@@ -14,9 +15,10 @@ public class Recipe {
 
     }
 
-    public Recipe(String name, String description, List<String> ingredient, List<String> ingredientQuantity) {
+    public Recipe(String name, String description, String url, List<String> ingredient, List<String> ingredientQuantity) {
         Name = name;
         Description = description;
+        Url = url;
         Ingredient = ingredient;
         IngredientQuantity = ingredientQuantity;
     }
@@ -51,5 +53,13 @@ public class Recipe {
 
     public void setIngredientQuantity(List<String> ingredientQuantity) {
         IngredientQuantity = ingredientQuantity;
+    }
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
     }
 }
