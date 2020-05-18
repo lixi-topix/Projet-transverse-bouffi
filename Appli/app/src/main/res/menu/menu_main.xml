@@ -25,7 +25,7 @@
             <!-- <item android:id="@+id/navigation_Menu" android:title="Menu" app:showAsAction="collapseActionView"/> -->
 
             <item
-                android:id="@+id/navigation_Recette"
+                android:id="@+id/navigation_create_recipe"
                 android:title="Recette"
                 app:showAsAction="collapseActionView"/>
 

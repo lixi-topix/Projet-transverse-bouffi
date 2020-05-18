@@ -64,8 +64,8 @@ public abstract class RootActivity extends AppCompatActivity {
             case R.id.navigation_Liste:
                 updateUIConnected(new Intent(getApplicationContext(), ListActivity.class));
                 return true;
-            case R.id.navigation_Recette:
-                updateUIConnected(new Intent(getApplicationContext(), RecetteActivity.class));
+            case R.id.navigation_create_recipe:
+                updateUIConnected(new Intent(getApplicationContext(), CreateRecipeActivity.class));
                 return true;
             case R.id.navigation_ajouterIngrédient:
                 updateUIConnected(new Intent(getApplicationContext(), AddIngredientActivity.class));

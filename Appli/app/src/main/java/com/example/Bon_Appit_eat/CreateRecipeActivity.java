@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 
-public class RecetteActivity extends RootActivity implements AddToRecetteDialogue.AddIngredientListener {
+public class CreateRecipeActivity extends RootActivity implements AddToRecetteDialogue.AddIngredientListener {
 
     private View button;
     private DatabaseReference mDatabase;
@@ -40,6 +40,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_recipe);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -51,9 +52,6 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
         sv.addView(ll);
         setContentView(sv);
 
-        TextView tv = new TextView(this);
-        tv.setText("We are already thrilled by your new recipe!");
-        ll.addView(tv);
 
         EditText et = new EditText(this);
         et.setHint("Name of the recipe");
@@ -84,7 +82,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
         ll.addView(addIngredient());
 
 
-        setContentView(R.layout.edittext);
+
         rDescription = this.findViewById(R.id.descriptionsRecette);
         if (rDescription.getParent() != null) {
             ((ViewGroup) rDescription.getParent()).removeView(rDescription);
@@ -124,7 +122,7 @@ public class RecetteActivity extends RootActivity implements AddToRecetteDialogu
 
 
     private View addIngredient() {
-        setContentView(R.layout.edittext);
+        setContentView(R.layout.activity_create_recipe);
         newIngredient = this.findViewById(R.id.gridingrédient);
         if (newIngredient.getParent() != null) {
             ((ViewGroup) newIngredient.getParent()).removeView(newIngredient); // <- fix
