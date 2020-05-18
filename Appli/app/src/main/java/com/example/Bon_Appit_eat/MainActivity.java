@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -75,14 +77,16 @@ public class MainActivity extends RootActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position, @NonNull Recipe model) {
+                final String key = getRef(position).getKey();
+
                 holder.setName(model.getName());
                 holder.setDesc(model.getDescription());
-                holder.setImage(model.getUrl());
+                holder.setImage(FirebaseStorage.getInstance().getReference().child("Recipes").child(key).toString());
 
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Toast.makeText(MainActivity.this, key, Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -114,7 +118,7 @@ public class MainActivity extends RootActivity {
         }
 
         void setImage(String image) {
-            Picasso.get().load(image).centerCrop().into(recipeImage);
+            Picasso.get().load(image).into(recipeImage);
         }
     }
 }

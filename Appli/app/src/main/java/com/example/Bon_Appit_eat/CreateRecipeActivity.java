@@ -136,7 +136,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 }
                 recettesPost.setIngredientQuantity(ingredientQuantity);
                 recettesPost.setIngredient(ingredientIDList);
-                recettesPost.setUrl(mDownloadUri.toString().trim());
+                //recettesPost.setUrl(mDownloadUri.toString().trim());
 
 
                 newPost.child(id).setValue(recettesPost);
