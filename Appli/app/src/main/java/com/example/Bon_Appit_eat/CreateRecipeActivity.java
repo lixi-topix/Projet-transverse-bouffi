@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -59,6 +61,14 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         et.setHint("Name of the recipe");
         ll.addView(et);
 
+        setContentView(R.layout.activity_create_recipe);
+
+        ImageButton imageButton = this.findViewById(R.id.btnAddImageRecipe);
+        if (imageButton.getParent() != null) {
+            ((ViewGroup) imageButton.getParent()).removeView(imageButton);
+        }
+        ll.addView(imageButton);
+
 
         //METTRE IMAGE ICI
 
@@ -84,7 +94,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
         ll.addView(addIngredient());
 
 
-        setContentView(R.layout.activity_create_recipe);
+
         rDescription = this.findViewById(R.id.descriptionsRecette);
         if (rDescription.getParent() != null) {
             ((ViewGroup) rDescription.getParent()).removeView(rDescription);
@@ -105,7 +115,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 recettesPost.setName(tempText.getText().toString().trim());
                 tempText = (EditText) ll.getChildAt(ll.getChildCount() - 2);
                 recettesPost.setDescription(tempText.getText().toString().trim());
-                for (int i = 3; i < ll.getChildCount() - 2; i++) {
+                for (int i = 4; i < ll.getChildCount() - 2; i++) {
                     Log.d(TAG, "i=" + i);
                     GridLayout tempG = (GridLayout) ll.getChildAt(i);
                     tempText = (EditText) tempG.getChildAt(1);
@@ -130,7 +140,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
             ((ViewGroup) newIngredient.getParent()).removeView(newIngredient); // <- fix
         }
 
-        if (ll.getChildCount() == 2) {
+        if (ll.getChildCount() == 3) {
             Log.d(TAG, "DANS LE IF ");
             newIngredient.removeViewAt(0);
             newIngredient.removeViewAt(0);
