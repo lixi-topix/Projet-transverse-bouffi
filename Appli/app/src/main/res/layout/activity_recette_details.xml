@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+            android:textSize="25dp"
+            android:id="@+id/ReicipeDetailsName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Reicipe Name"
+            />
+
+        <ImageView
+            android:id="@+id/ReceipeDetailImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/logo"
+
+            />
+            <LinearLayout
+                android:id="@+id/Ingredient_Quantity_Type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="Ingredient"
+                android:textSize="25dp"
+
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textSize="25dp"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:text="Type"
+                    android:textSize="25dp"
+
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descriptionsRecette"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gridingrédient"
+                android:minHeight="80sp"
+                android:isScrollContainer="true"
+
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="La recette dans les moindres détails"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="20dp"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>
