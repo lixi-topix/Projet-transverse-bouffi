@@ -1,7 +1,11 @@
 package com.example.Bon_Appit_eat;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +19,25 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -38,6 +53,9 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
     private Button rPost;
     private ArrayList<String> ingredientIDList;
     private ArrayList<String> ingredientQuantity;
+    private static final int GALLERY_INTENT = 1;
+    private ImageButton imageButton;
+    private Uri mResultUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +81,7 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
 
         setContentView(R.layout.activity_create_recipe);
 
-        ImageButton imageButton = this.findViewById(R.id.btnAddImageRecipe);
+        imageButton = this.findViewById(R.id.btnAddImageRecipe);
         if (imageButton.getParent() != null) {
             ((ViewGroup) imageButton.getParent()).removeView(imageButton);
         }
@@ -72,24 +90,13 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
 
         //METTRE IMAGE ICI
 
-/*
-
-
-        setContentView(R.layout.edittext);
-        newIngredient = this.findViewById(R.id.gridingrédient) ;
-        if(newIngredient.getParent() != null) {
-            ((ViewGroup)newIngredient.getParent()).removeView(newIngredient); // <- fix
-        }
-        View button =newIngredient.getChildAt(2);
-        button.setOnClickListener(new View.OnClickListener() {
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Button");
-                newIngredient.removeViewAt(2);
-
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, GALLERY_INTENT);
             }
         });
-*/
 
         ll.addView(addIngredient());
 
@@ -126,10 +133,83 @@ public class CreateRecipeActivity extends RootActivity implements AddToRecetteDi
                 DatabaseReference newPost = FirebaseDatabase.getInstance().getReference().child("Receipes");
                 String id = newPost.push().getKey();
                 newPost.child(id).setValue(recettesPost);
+
+                uploadImage(FirebaseStorage.getInstance().getReference().child("Recipes").child(id));
+
                 updateUIConnected(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
+    }
+
+    private void uploadImage(final StorageReference ref) {
+        if (mResultUri != null) {
+            ref.putFile(mResultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                    }
+                }
+            });
+        } else {
+            Bitmap bitmap = ((BitmapDrawable) imageButton.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            ref.putBytes(data).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+
+            assert data != null;
+            Uri imageUri = data.getData();
+
+            CropImage.activity(imageUri)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                assert result != null;
+                mResultUri = result.getUri();
+
+                imageButton.setImageURI(mResultUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                assert result != null;
+                Exception error = result.getError();
+            }
+        }
     }
 
 
