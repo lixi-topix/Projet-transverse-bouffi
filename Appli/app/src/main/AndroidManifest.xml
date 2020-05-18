@@ -36,6 +36,7 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".ListActivity" />
         <activity android:name=".FrigoActivity"/>
+        <activity android:name=".AddIngredientActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

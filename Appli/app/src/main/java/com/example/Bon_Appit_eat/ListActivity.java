@@ -26,10 +26,6 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
     Button PushToFrigo;
     Button AddNewListElement;
     ArrayList<Listcourse_Element> productBuy = new ArrayList<>();
-    private ListView listView;
-    private ListAdapter listAdapter;
-    private DatabaseReference databaseReference;
-    private DatabaseReference FrigoIngredient;
     DatabaseReference mDatabase;
     DatabaseReference rDatabase;
     DatabaseReference r2Database;
@@ -38,8 +34,13 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
     List<String> rListQtyIngredient;
     List<String> rListIdIngredient;
     List<String> mListTypeIngredient;
-    List<String> rlistID ;
+    List<String> rlistID;
     Context context = this;
+    private ListView listView;
+    private ListAdapter listAdapter;
+    private DatabaseReference databaseReference;
+    private DatabaseReference FrigoIngredient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setallTheNeededElement();
@@ -81,30 +82,30 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
                         , listcourse_Element.get(i).CartQuantity
                 );
 
-                if(0 != productBuy.size()){
-                    int sum =  ingredients.CartQuantity;
+                if (0 != productBuy.size()) {
+                    int sum = ingredients.CartQuantity;
                     boolean check = false;
-                    for (Listcourse_Element element:
+                    for (Listcourse_Element element :
                             productBuy) {
-                        if(element.Ingredient_name.equals(ingredients.Ingredient_name) ){
-                            sum = sum +element.CartQuantity;
+                        if (element.Ingredient_name.equals(ingredients.Ingredient_name)) {
+                            sum = sum + element.CartQuantity;
                             check = true;
                             element.setCartQuantity(sum);
                         }
 
                     }
                     // s'il n'existe pas déjà on l'ajoute
-                    if(!check){
+                    if (!check) {
                         productBuy.add(ingredients);
                     }
                     // si la liste est vide on l'ajoute
-                }else {
+                } else {
                     productBuy.add(ingredients);
                 }
 
             }
-            for (Listcourse_Element element:
-                 productBuy) {
+            for (Listcourse_Element element :
+                    productBuy) {
 
                 databaseReference
                         .child("Frigo")
@@ -116,7 +117,6 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
         }
 
     }
-
 
 
     public void setallTheNeededElement() {
@@ -159,7 +159,7 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
                 }
 
-                for (String s:
+                for (String s :
                         rlistID) {
                     r2Database = FirebaseDatabase.getInstance().getReference().child("Receipes").child(s).child("ingredient");
                     r2Database.addValueEventListener(new ValueEventListener() {
@@ -188,16 +188,17 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
                             }
 
-                            for (int i = 0; i< rListIdIngredient.size(); i++) {
-                                for (int j = 0; j< mListIdIngredient.size(); j++) {
-                                    if( mListIdIngredient.get(j).equals(rListIdIngredient.get(i))){
+                            for (int i = 0; i < rListIdIngredient.size(); i++) {
+                                for (int j = 0; j < mListIdIngredient.size(); j++) {
+                                    if (mListIdIngredient.get(j).equals(rListIdIngredient.get(i))) {
                                         System.out.println("here");
-                                        listcourse_Element.add(new Listcourse_Element( rListIdIngredient.get(i),mListIngredient.get(j),rListQtyIngredient.get(i)+mListTypeIngredient.get(j),0,0));
+                                        listcourse_Element.add(new Listcourse_Element(rListIdIngredient.get(i), mListIngredient.get(j), rListQtyIngredient.get(i) + mListTypeIngredient.get(j), 0, 0));
                                     }
                                 }
 
 
-                            }listAdapter = new Listadapter_course(context, listcourse_Element);
+                            }
+                            listAdapter = new Listadapter_course(context, listcourse_Element);
                             listView.setAdapter(listAdapter);
 
                         }
@@ -207,11 +208,12 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
                         }
                     });
-                    
+
 
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -233,10 +235,10 @@ public class ListActivity extends RootActivity implements DialogueElement.Dialog
 
     public void Creation_new_element(String Name_new_element, String Quantity_new_element, String Quantity_qualifier) {
 
-        for (int i =0 ; i< mListIngredient.size(); i++) {
+        for (int i = 0; i < mListIngredient.size(); i++) {
 
-            if(mListIngredient.get(i).equals(Name_new_element)){
-                listcourse_Element.add(new Listcourse_Element(mListIdIngredient.get(i),Name_new_element, Quantity_new_element + "" + Quantity_qualifier, 1, 0));
+            if (mListIngredient.get(i).equals(Name_new_element)) {
+                listcourse_Element.add(new Listcourse_Element(mListIdIngredient.get(i), Name_new_element, Quantity_new_element + "" + Quantity_qualifier, 1, 0));
                 listAdapter = new Listadapter_course(this, listcourse_Element);
                 listView.setAdapter(listAdapter);
             }

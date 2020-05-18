@@ -11,21 +11,18 @@
 
         <menu>
             <item
-                android:id="@+id/profileActivity"
-                android:title="Profile"
+                android:id="@+id/navigation_all_recipes"
+                android:title="All Recipes"
                 app:showAsAction="collapseActionView" />
+
+            <!-- <item android:id="@+id/navigation_profile" android:title="Profile" app:showAsAction="collapseActionView" /> -->
 
             <item
                 android:id="@+id/navigation_Frigo"
                 android:title="Frigo"
                 app:showAsAction="collapseActionView"/>
 
-
-            <item
-                android:id="@+id/navigation_Menu"
-                android:title="Menu"
-                app:showAsAction="collapseActionView"/>
-
+            <!-- <item android:id="@+id/navigation_Menu" android:title="Menu" app:showAsAction="collapseActionView"/> -->
 
             <item
                 android:id="@+id/navigation_Recette"
@@ -37,20 +34,14 @@
                 android:title="Liste course"
                 app:showAsAction="collapseActionView"/>
 
-            <item
-                android:id="@+id/navigation_Settings"
-                android:title="Settings"
-                app:showAsAction="collapseActionView"/>
+            <!-- <item android:id="@+id/navigation_Settings" android:title="Settings" app:showAsAction="collapseActionView"/> -->
 
             <item
                 android:id="@+id/navigation_ajouterIngrédient"
                 android:title="Ajouter Ingrédient"
                 app:showAsAction="collapseActionView"/>
 
-            <item
-                android:id="@+id/test"
-                android:title="Test"
-                app:showAsAction="collapseActionView" />
+            <!-- <item android:id="@+id/test" android:title="Test" app:showAsAction="collapseActionView" /> -->
 
             <item
                 android:id="@+id/logout"

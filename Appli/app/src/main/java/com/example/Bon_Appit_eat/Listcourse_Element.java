@@ -7,7 +7,7 @@ public class Listcourse_Element {
     int Ingredient_img;
     int CartQuantity;
 
-    public Listcourse_Element(String ID_ingrédient,String Ingredient_name, String Qty_needed, int Ingredient_img, int CartQantity) {
+    public Listcourse_Element(String ID_ingrédient, String Ingredient_name, String Qty_needed, int Ingredient_img, int CartQantity) {
         this.ID_ingrédient = ID_ingrédient;
         this.Ingredient_name = Ingredient_name;
         this.Qty_needed = Qty_needed;

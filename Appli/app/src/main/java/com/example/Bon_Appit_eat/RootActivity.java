@@ -2,6 +2,9 @@ package com.example.Bon_Appit_eat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,5 +44,42 @@ public abstract class RootActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mAuth != null) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_Frigo:
+                updateUIConnected(new Intent(getApplicationContext(), FrigoActivity.class));
+                return true;
+            case R.id.navigation_Liste:
+                updateUIConnected(new Intent(getApplicationContext(), ListActivity.class));
+                return true;
+            case R.id.navigation_Recette:
+                updateUIConnected(new Intent(getApplicationContext(), RecetteActivity.class));
+                return true;
+            case R.id.navigation_ajouterIngrédient:
+                updateUIConnected(new Intent(getApplicationContext(), AddIngredientActivity.class));
+                return true;
+            case R.id.logout:
+                mAuth.signOut();
+                updateUIConnected(null);
+                finish();
+                return true;
+            case R.id.navigation_all_recipes:
+                updateUIConnected(new Intent(getApplicationContext(), MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.example.Bon_Appit_eat;
 
 import java.util.List;
 
-public class Recettes {
+public class Recipe {
 
     private String Name;
     private String Description;
@@ -10,11 +10,11 @@ public class Recettes {
     private List<String> IngredientQuantity;
 
 
-    public Recettes(){
+    public Recipe() {
 
     }
 
-    public Recettes(String name, String description, List<String> ingredient, List<String> ingredientQuantity) {
+    public Recipe(String name, String description, List<String> ingredient, List<String> ingredientQuantity) {
         Name = name;
         Description = description;
         Ingredient = ingredient;
