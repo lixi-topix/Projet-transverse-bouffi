@@ -1,5 +1,7 @@
 package com.example.Bon_Appit_eat;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -81,12 +87,12 @@ public class MainActivity extends RootActivity {
 
                 holder.setName(model.getName());
                 holder.setDesc(model.getDescription());
-                holder.setImage(FirebaseStorage.getInstance().getReference().child("Recipes").child(key).toString());
+                holder.setImage(getApplicationContext(), key);
 
                 holder.root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, key, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, FirebaseStorage.getInstance().getReference().child("Recipes").child(key).toString(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -100,6 +106,7 @@ public class MainActivity extends RootActivity {
         TextView recipeName;
         TextView recipeDesc;
         ImageView recipeImage;
+        Context ct;
 
         RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,8 +124,18 @@ public class MainActivity extends RootActivity {
             recipeDesc.setText(desc);
         }
 
-        void setImage(String image) {
-            Picasso.get().load(image).into(recipeImage);
+        void setImage(Context ctx, String key) {
+            ct = ctx;
+            FirebaseStorage.getInstance().getReference().child("Recipes").child(key).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Picasso.with(ct)
+                                .load(task.getResult())
+                                .into(recipeImage);
+                    }
+                }
+            });
         }
     }
 }
