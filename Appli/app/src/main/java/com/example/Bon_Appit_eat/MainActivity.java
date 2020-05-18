@@ -114,7 +114,7 @@ public class MainActivity extends RootActivity {
         }
 
         void setImage(String image) {
-            Picasso.get().load(image).into(recipeImage);
+            Picasso.get().load(image).centerCrop().into(recipeImage);
         }
     }
 }
